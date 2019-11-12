@@ -1,9 +1,9 @@
 package com.smallshop.shop.dao.repository;
 
-import com.smallshop.shop.dao.entity.User;
+import com.smallshop.shop.dao.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 }
