@@ -7,7 +7,17 @@
 <body>
 <div th:replace="base-layout :: header"></div>
     <div class="container">
-        fff
+        <div class="card text-center card-product" th:each="product : ${products}">
+            <div class="card-product__img">
+                <img class="card-img" src="img/product/product1.png" alt="img">
+
+            </div>
+            <div class="card-body">
+                    <p class="card-product__price"><span th:text="${product.price}"></span></p>
+                    <h4 class="card-product__title"><a href="single-product.html"><span th:text="${product.name}"></span></a></h4>
+                    <p><span th:text="${product.description}"></span> </p>
+            </div>
+        </div>
     </div>
 
 </body>

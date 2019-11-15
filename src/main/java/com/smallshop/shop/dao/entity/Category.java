@@ -1,6 +1,7 @@
 package com.smallshop.shop.dao.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,4 +17,14 @@ public class Category {
     private String categoryDescription;
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", categoryName='" + categoryName + '\'' +
+                ", categoryDescription='" + categoryDescription + '\'' +
+                ", products=" + products +
+                '}';
+    }
 }
