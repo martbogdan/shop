@@ -16,6 +16,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     @NotBlank(message = "Must not be blank")
+    private String username;
+    @NotBlank(message = "Must not be blank")
     private String firstName;
     @NotBlank(message = "Must not be blank")
     private String lastName;

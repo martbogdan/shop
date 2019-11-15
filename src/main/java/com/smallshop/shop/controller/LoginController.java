@@ -20,12 +20,10 @@ public class LoginController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/login")
-    public String getLoginPage (){
-        return "login";
-    }
+
     @GetMapping("/registration")
-    public String registration(){
+    public String registration(Model model) {
+        model.addAttribute("user", new User());
         return "registration";
     }
 
@@ -36,11 +34,11 @@ public class LoginController {
         }
         user = userService.createUser(user);
         model.addAttribute("successMessage", SUCCESSFULLY_REGISTERED_MESSAGE);
-        return "login";
+        return "redirect:/login";
     }
 
     private boolean userExists (User user, BindingResult bindingResult){
-        boolean result = userService.getUserByEmail(user.getEmail()).isPresent();
+        boolean result = userService.getUserByUsername(user.getUsername()).isPresent();
         if (result) {
             bindingResult.rejectValue("email", "error.user", EMAIL_ALREADY_USED_MESSAGE);
         }

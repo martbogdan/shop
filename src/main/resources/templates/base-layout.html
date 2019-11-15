@@ -37,7 +37,7 @@
                 </li>
 
                 <li th:if="${#authorization.expression('!isAuthenticated()')}">
-                    <a href="/signin" th:href="@{/signin}">
+                    <a href="/login" th:href="@{/login}">
                         <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
                     </a>
                 </li>
@@ -47,7 +47,7 @@
                     </a>
                 </li>
                 <li th:if="${#authorization.expression('isAuthenticated()')}">
-                    <a href="/user/profile" th:href="@{/user/profile}"><span th:text="${user.firstname}"></span></a>
+                    <a href="/user/profile" th:href="@{/user/profile}"><span th:text="${#httpServletRequest.remoteUser}"></span></a>
 
                 </li>
                 <li th:if="${#authorization.expression('isAuthenticated()')}">

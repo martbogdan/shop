@@ -22,18 +22,26 @@
                 <h2>Registration Form</h2>
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <label th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"
+                        <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
                                class="validation-message"></label>
-                        <input type="text" th:field="*{firstname}" placeholder="Name"
+                        <input type="text" th:field="*{username}" placeholder="Nickname"
+                               class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-9">
+                        <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                               class="validation-message"></label>
+                        <input type="text" th:field="*{firstName}" placeholder="First Name"
                                class="form-control" />
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-9">
-                        <label	th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"
+                        <label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
                                   class="validation-message"></label>
-                        <input type="text" th:field="*{lastname}"
+                        <input type="text" th:field="*{lastName}"
                                placeholder="Last Name" class="form-control" />
                     </div>
                 </div>
