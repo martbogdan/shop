@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+<head th:replace="base-layout :: head"></head>
+
+<body>
+
+<div th:replace="base-layout :: header"></div>
+
+<div class="container hero-unit">
+    <h1 th:text="#{profile.title}">Profile</h1>
+    <table th:object="${user}" class="table">
+        <tr>
+            <td rowspan="3" align="center" width="50%">
+                <div th:if="*{photo==null}"><img width="200" src="/resources/images/220px-User_icon_2.svg.png"></div>
+                <div th:unless="*{photo==null}"><img width="200" th:src="'/resources/uploads/' + *{photo}"></div>
+                <form action="uploadPhoto" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="file" id="selectedFile" style="display: none;" onchange="form.submit()"/>
+                    <input type="button" th:value="#{profile.image.upload}" value="Загрузити Фото"
+                           onclick="document.getElementById('selectedFile').click();"/>
+                </form>
+            </td>
+            <td width="20%" th:text="#{profile.uname}">Name</td>
+            <td><div th:text="*{firstName} + ' ' + *{lastName}"></div></td>
+        </tr>
+        <tr>
+            <td th:text="#{profile.email}">Email</td>
+            <td><div th:text="*{email}"></div></td>
+        </tr>
+        <tr>
+            <td th:text="#{profile.birthday}">Birthday</td>
+            <td><div th:text="*{#dates.format(dob, 'dd-MM-yyyy')}"></div></td>
+        </tr>
+
+        </tr>
+    </table>
+</div>
+</body>
+</html>

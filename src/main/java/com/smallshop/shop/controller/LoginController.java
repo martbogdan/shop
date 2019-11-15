@@ -3,6 +3,8 @@ package com.smallshop.shop.controller;
 import com.smallshop.shop.dao.entity.User;
 import com.smallshop.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,5 +45,16 @@ public class LoginController {
             bindingResult.rejectValue("email", "error.user", EMAIL_ALREADY_USED_MESSAGE);
         }
         return result;
+    }
+
+    @GetMapping("/admin/home")
+    public String home(Model model) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.getUserByUsername(auth.getName()).get();
+        model.addAttribute("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        model.addAttribute("adminMessage","Content Available Only for Users with Admin Role");
+
+        return "admin/admin-page";
     }
 }
