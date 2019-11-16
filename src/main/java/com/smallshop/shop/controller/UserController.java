@@ -1,15 +1,21 @@
 package com.smallshop.shop.controller;
 
 import com.smallshop.shop.dao.entity.User;
+import com.smallshop.shop.dao.entity.UserRole;
+import com.smallshop.shop.exceptions.NotFound;
 import com.smallshop.shop.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Collections;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -29,6 +35,11 @@ public class UserController {
 
     @GetMapping("profile")
     public String userProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.getUserByUsername(authentication.getName()).orElseThrow(NotFound::new);
+        if(user.getRole().equals(Collections.singleton(UserRole.ADMIN))) {
+            return "admin-page";
+        }
         return "user-profile";
     }
 }
