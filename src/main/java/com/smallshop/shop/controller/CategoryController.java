@@ -22,20 +22,22 @@ public class CategoryController {
     @GetMapping("/list")
     public String getCategoryList (Model model) {
         model.addAttribute("categories", categoryService.getAllCatagories());
+        model.addAttribute("newCategory",new Category());
         return "categories";
     }
 
     @PostMapping("/addCategory")
-    public String addCategory (@ModelAttribute("newCategory")Category newCategory, RedirectAttributes model) {
+    public String addCategory (@ModelAttribute("newCategory") Category newCategory, RedirectAttributes model) {
+
         Category categoryDB = categoryService.getCategoryByName(newCategory.getCategoryName());
-        boolean error = false;
         if (categoryDB != null){
-            model.addFlashAttribute("caterory_error", "Category already exists");
-            error=true;
+            model.addFlashAttribute("category_error", "Category already exists");
+            return "redirect:/user/profile";
         }
-        if (!error){
-            categoryService.createUpdate(newCategory);
-        }
-        return "forward:/profile";
+
+            model.addAttribute("newCategory", categoryService.createNewCategory(newCategory.getCategoryName(), newCategory.getCategoryDescription()));
+            model.addFlashAttribute("category_error", "Category added successfully");
+
+        return "redirect:/user/profile";
     }
 }

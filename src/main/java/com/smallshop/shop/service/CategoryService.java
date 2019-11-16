@@ -23,10 +23,17 @@ public class CategoryService {
     }
 
     public Category getCategoryByName (String name){
-        return categoryRepository.findByCategoryName(name);
+        return categoryRepository.findCategoryByCategoryName(name);
     }
 
-    private Category createNewCategory (Category category) {
+    public Category createNewCategory (Category category) {
+        return categoryRepository.save(category);
+    }
+
+    public Category createNewCategory (String categoryName, String description) {
+        Category category = new Category();
+        category.setCategoryName(categoryName);
+        category.setCategoryDescription(description);
         return categoryRepository.save(category);
     }
 
