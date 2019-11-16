@@ -8,6 +8,90 @@
 <div th:replace="base-layout :: header"></div>
 <div class="container">
     <h1>Adminka</h1>
+    <div class="container">
+        <h1 th:text="#{profile.title}">Profile</h1>
+        <table th:object="${user}" class="table">
+            <tr>
+                <td rowspan="3" align="center" width="50%">
+                    <div th:if="*{photo==null}"><img width="200" src="/resources/images/220px-User_icon_2.svg.png"></div>
+                    <div th:unless="*{photo==null}"><img width="200" th:src="'/resources/uploads/' + *{photo}"></div>
+                    <form action="uploadPhoto" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="file" id="selectedFile" style="display: none;" onchange="form.submit()"/>
+                        <input type="button" th:value="#{profile.image.upload}" value="Загрузити Фото"
+                               onclick="document.getElementById('selectedFile').click();"/>
+                    </form>
+                </td>
+                <td width="20%" th:text="#{profile.uname}">Name</td>
+                <td><div th:text="*{firstName} + ' ' + *{lastName}"></div></td>
+            </tr>
+            <tr>
+                <td th:text="#{profile.email}">Email</td>
+                <td><div th:text="*{email}"></div></td>
+            </tr>
+            <tr>
+                <td th:text="#{profile.birthday}">Birthday</td>
+                <td><div th:text="*{#dates.format(dob, 'dd-MM-yyyy')}"></div></td>
+            </tr>
+
+            </tr>
+        </table>
+    </div>
+    <div class="container">
+        <form th:action="@{addCategory}" th:object="${newCategory}" method="post">
+            <h3>Add new Category</h3>
+            <div style="margin-top:10px;color:darkred;" th:text="${caterory_error}"></div>
+            <div class="form-group">
+                <label for="category name">Name</label>:
+                <input type="text" id="category name" name="category name"
+                       class="form-control" autofocus="autofocus" placeholder="Name">
+            </div>
+
+            <div class="form-group">
+                <label for="category description">Description</label>:
+                <input type="text" id="category description" name="category description"
+                       class="form-control" autofocus="autofocus" placeholder="Description">
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <input type="submit" name="register-submit" id="register-submit"
+                               class="form-control btn btn-info" value="New category">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="container">
+        <form >
+            <h3>Add new product</h3>
+            <div class="form-group">
+                <label for="product name">Name</label>:
+                <input type="text" id="product name" name="product name"
+                       class="form-control" autofocus="autofocus" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label for="product price">Price</label>:
+                <input type="text" id="product price" name="product price"
+                       class="form-control" autofocus="autofocus" placeholder="Price">
+            </div>
+            <div class="form-group">
+                <label for="product description">Description</label>:
+                <input type="text" id="product description" name="product description"
+                       class="form-control" autofocus="autofocus" placeholder="Description">
+            </div>
+            <div class="form-group">
+                <label for="product quantity">Quantity</label>:
+                <input type="text" id="product quantity" name="product quantity"
+                       class="form-control" autofocus="autofocus" placeholder="Quantity">
+            </div>
+        </form>
+
+    </div>
+
+
+
 </div>
 </body>
 </html>
