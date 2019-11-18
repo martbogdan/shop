@@ -6,10 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -20,24 +17,40 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/list")
-    public String getCategoryList (Model model) {
+    public String getCategoryList(Model model) {
         model.addAttribute("categories", categoryService.getAllCatagories());
-        model.addAttribute("newCategory",new Category());
+        model.addAttribute("newCategory", new Category());
         return "categories";
     }
 
+    @GetMapping("/listAdmin")
+    public String getCategoryListAdmin(Model model) {
+        model.addAttribute("categories", categoryService.getAllCatagories());
+        model.addAttribute("newCategory", new Category());
+        return "categories-admin";
+    }
+
     @PostMapping("/addCategory")
-    public String addCategory (@ModelAttribute("newCategory") Category newCategory, RedirectAttributes model) {
+    public String addCategory(@ModelAttribute("newCategory") Category newCategory, RedirectAttributes model) {
 
         Category categoryDB = categoryService.getCategoryByName(newCategory.getCategoryName());
-        if (categoryDB != null){
+        if (categoryDB != null) {
             model.addFlashAttribute("category_error", "Category already exists");
             return "redirect:/user/profile";
         }
 
-            model.addAttribute("newCategory", categoryService.createNewCategory(newCategory.getCategoryName(), newCategory.getCategoryDescription()));
-            model.addFlashAttribute("category_error", "Category added successfully");
+        model.addAttribute("newCategory", categoryService.createNewCategory(newCategory.getCategoryName(), newCategory.getCategoryDescription()));
+        model.addFlashAttribute("category_error", "Category added successfully");
 
         return "redirect:/user/profile";
+    }
+
+    @GetMapping("/deleteCategory")
+    public String delCategory (@RequestParam Long id) {
+        Category deleteCategory = categoryService.getCategoryById(id);
+        if (deleteCategory != null) {
+            categoryService.delete(deleteCategory.getId());
+        }
+        return "forward:/category/listAdmin";
     }
 }

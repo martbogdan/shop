@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -51,5 +52,12 @@ public class CategoryService {
     public Category createUpdate (Category category) {
         Category categoryToSave = category.getId() == null ? createNewCategory(category) : updateCategory(category);
         return categoryRepository.save(categoryToSave);
+    }
+
+    public void delete (Long id) {
+        Optional<Category> toDelete = categoryRepository.findById(id);
+        if (toDelete.isPresent()){
+            categoryRepository.delete(toDelete.get());
+        }
     }
 }

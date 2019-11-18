@@ -36,41 +36,9 @@
             </tr>
         </table>
     </div>
-    <h3>Add new Category</h3>
-    <div class="container-fluid">
-        <form action="/category/addCategory" th:action="@{/category/addCategory}" th:object="${newCategory}" method="Post">
-            <div style="margin-top:10px;color:darkred;" th:text="${category_error}"></div>
-            <div class="form-group">
-                <label>categoryName</label>:
-                <input type="text"
-                       id="categoryName"
-                       name="categoryName"
-                       class="form-control"
-                       autofocus="autofocus"
-                       placeholder="categoryName">
-            </div>
-            <div class="form-group">
-                <label>categoryDescription</label>:
-                <input type="text"
-                       id="categoryDescription"
-                       name="categoryDescription"
-                       class="form-control"
-                       placeholder="categoryDescription">
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-6 col-sm-offset-3">
-                        <input type="submit"
-                               name="register-submit"
-                               id="register-submit"
-                               class="form-control btn btn-info"
-                               value="Register new category">
-                    </div>
-                </div>
-            </div>
-        </form>
-
-    </div>
+<div class="container" align="center">
+    <h3><a th:href="@{/category/listAdmin}">Manage category</a> </h3>
+</div>
     <div class="container">
         <form >
             <h3>Add new product</h3>
