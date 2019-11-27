@@ -28,6 +28,7 @@ public class ProductController {
     public String getOneProduct (@PathVariable("productId") Long productId, Model model){
         Product product = productService.getProductById(productId);
         model.addAttribute("product", product);
+        model.addAttribute("category", product.getCategory());
         return "single-product";
     }
     @GetMapping("/categories/{categoryId}")
