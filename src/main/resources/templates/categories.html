@@ -8,7 +8,7 @@
 <div th:replace="base-layout :: header"></div>
 <div class="container" style="align-content: center">
     <div th:each="category : ${categories}">
-        <a th:href="${category.categoryName}"> <span th:text="${category.categoryName}"></span> </a> : <span th:text="${category.categoryDescription}"></span>
+        <a th:href="@{product/categories/{categoryId}(categiryId=${category.id})}"> <span th:text="${category.categoryName}"></span> </a> : <span th:text="${category.categoryDescription}"></span>
     </div>
 </div>
 </body>

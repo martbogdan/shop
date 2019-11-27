@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base-layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="hidden" name="productId" th:value="${product.id}">
+<div th:replace="base-layout :: header"></div>
+<div class="container">
+
+    <div class="owl-carousel owl-theme s_Product_carousel">
+         <div class="single-prd-item">
+           <img class="img-fluid" src="img/category/s-p1.jpg" alt="image">
+         </div>
+        <!-- <div class="single-prd-item">
+            <img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+        </div>
+        <div class="single-prd-item">
+            <img class="img-fluid" src="img/category/s-p1.jpg" alt="">
+        </div> -->
+    </div>
+    <div class="s_product_text">
+        <h3 th:text="${product.name}"></h3>
+        <h2 th:text="${product.price}">$</h2>
+        <ul class="list">
+            <li><a class="active" href="#"><span>Category</span> : <span th:text="${product.category}"></span></a></li>
+            <li><a href="#"><span>Availibility</span> : In Stock</a></li>
+        </ul>
+        <p><span th:text="${product.description}"></span></p>
+        <div class="product_count">
+            <label for="qty">Quantity:</label>
+            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                    class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
+            <input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                    class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
+            <a class="button primary-btn" href="#">Add to Cart</a>
+        </div>
+        <div class="card_area d-flex align-items-center">
+            <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
+            <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
