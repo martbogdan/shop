@@ -31,11 +31,12 @@ public class ProductController {
         return "single-product";
     }
     @GetMapping("/categories/{categoryId}")
-    public String getAllByCategory (@PathVariable("categoryId") Long id, Model model) {
-        Category category = categoryService.getCategoryById(id);
-        model.addAttribute("products", productService.getAllByCategory(category.getId()));
+    public String getAllByCategory (@PathVariable("categoryId") Long categoryId, Model model) {
+        Category category = categoryService.getCategoryById(categoryId);
+        model.addAttribute("category", category);
+        model.addAttribute("categoryProducts", productService.getAllByCategory(category.getId()));
         System.out.println(productService.getAllByCategory(category.getId()));
-        return "products";
+        return "products-category";
     }
 
 

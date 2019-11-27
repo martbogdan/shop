@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base-layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="base-layout :: header"></div>
+
+<div class="container">
+    <input type="hidden" name="categoryId" th:value="${category.id}">
+    <div class="card text-center card-product" th:each="product : ${categoryProducts}">
+        <div class="card-product__img">
+            <img class="card-img" src="img/product/product1.png" alt="img">
+
+        </div>
+        <div class="card-body">
+            <p class="card-product__price"><span th:text="${product.price}"></span></p>
+            <h4 class="card-product__title"><a href="single-product.html" th:href="@{/product/single/{productId}(productId=${product.id})}"><span th:text="${product.name}"></span></a></h4>
+            <p><span th:text="${product.description}"></span> </p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

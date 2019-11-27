@@ -15,16 +15,17 @@ public class Category {
     private Long id;
     private String categoryName;
     private String categoryDescription;
+    @ToString.Exclude
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Product> products;
 
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", categoryName='" + categoryName + '\'' +
-                ", categoryDescription='" + categoryDescription + '\'' +
-                ", products=" + products +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Category{" +
+//                "id=" + id +
+//                ", categoryName='" + categoryName + '\'' +
+//                ", categoryDescription='" + categoryDescription + '\'' +
+//                ", products=" + products +
+//                '}';
+//    }
 }
