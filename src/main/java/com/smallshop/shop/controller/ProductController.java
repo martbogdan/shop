@@ -51,7 +51,8 @@ public class ProductController {
                 newProduct.getName(),
                 newProduct.getPrice(),
                 newProduct.getDescription(),
-                newProduct.getQuantity()));
+                newProduct.getQuantity(),
+                newProduct.getCategory()));
         model.addFlashAttribute("product_error", "Product added successfully");
         return "redirect:/user/profile";
     }

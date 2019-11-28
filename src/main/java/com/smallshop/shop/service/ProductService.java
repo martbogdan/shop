@@ -1,5 +1,6 @@
 package com.smallshop.shop.service;
 
+import com.smallshop.shop.dao.entity.Category;
 import com.smallshop.shop.dao.entity.Product;
 import com.smallshop.shop.dao.repository.ProductRepository;
 import com.smallshop.shop.exceptions.NotFound;
@@ -28,12 +29,13 @@ public class ProductService {
     public Product createProduct (Product product){
         return productRepository.save(product);
     }
-    public Product createProduct (String prodName, Double price, String description, Integer quantity) {
+    public Product createProduct (String prodName, Double price, String description, Integer quantity, Category category) {
         Product product = new Product();
         product.setName(prodName);
         product.setPrice(price);
         product.setDescription(description);
         product.setQuantity(quantity);
+        product.setCategory(category);
         return productRepository.save(product);
     }
 }
