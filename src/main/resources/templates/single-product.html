@@ -23,7 +23,7 @@
     </div>
     <div class="s_product_text">
         <h3 th:text="${product.name}"></h3>
-        <h2 th:text="${product.price}"></h2><h2>UAH</h2>
+        <h2><span  th:text="${product.price}"></span><span> UAH</span></h2>
         <ul class="list">
             <li><a class="active" href="products-category.html" th:href="@{/product/categories/{categoryId}(categoryId=${category.id})}"><span>Category</span> : <span th:text="${product.category.categoryName}"></span></a></li>
             <li><a href="#"><span>Availibility</span> : In Stock</a></li>
