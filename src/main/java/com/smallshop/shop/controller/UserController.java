@@ -12,10 +12,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -46,5 +47,20 @@ public class UserController {
             return "admin-page";
         }
         return "user-profile";
+    }
+    @PostMapping("uploadPhoto")
+    public String uploadPhoto (@RequestParam("file")MultipartFile file, @ModelAttribute("user") User user){
+        String uploadName = file.getOriginalFilename();
+
+        try {
+            File transferFile = new File(basePath+"/"+uploadName);
+            file.transferTo(transferFile);
+            log.info("Saved into {}", transferFile.getPath());
+            user.setPhoto(uploadName);
+            userService.updateUser(user);
+        } catch (IOException e) {
+            log.error("Error saving file", e);
+        }
+        return "redirect:/user/profile";
     }
 }

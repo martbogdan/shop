@@ -6,6 +6,8 @@ import com.smallshop.shop.dao.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -40,6 +42,33 @@ public class UserService {
         user.setRole(Collections.singleton(UserRole.ADMIN));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    public User updateUser (User user) {
+        User userDB = userRepository.findById(user.getUserId()).get();
+        if (!StringUtils.isEmpty(user.getFirstName())) {
+            userDB.setFirstName(user.getFirstName());
+        }
+        if (!StringUtils.isEmpty(user.getLastName())) {
+            userDB.setLastName(user.getLastName());
+        }
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            userDB.setEmail(user.getEmail());
+        }
+        if (!StringUtils.isEmpty(user.getDob())) {
+            userDB.setDob(user.getDob());
+        }
+        if (!StringUtils.isEmpty(user.getPhoto())) {
+            userDB.setPhoto(user.getPhoto());
+        }
+        if (!StringUtils.isEmpty(user.getRole())) {
+            userDB.setRole(user.getRole());
+        }
+        if (!StringUtils.isEmpty(user.getUsername())) {
+            userDB.setUsername(user.getUsername());
+        }
+        userRepository.save(userDB);
+        return userDB;
     }
 
 }
