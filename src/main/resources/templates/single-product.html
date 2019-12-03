@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="base-layout :: head">
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,7 +12,15 @@
 
     <div class="owl-carousel owl-theme s_Product_carousel">
          <div class="single-prd-item">
-           <img class="img-fluid" src="img/category/s-p1.jpg" alt="image">
+             <div class="img-fluid" th:if="*{product.photo==null}"><img width="200" src="/resources/images/Product_icon.png" alt="img"></div>
+             <div th:unless="*{product.photo==null}"><img width="200" th:src="'/resources/uploads/' + *{product.photo}"></div>
+             <div sec:authorize="hasAuthority('ADMIN')">
+                 <form action="/product/uploadProductPhoto" th:action="@{/product/uploadProductPhoto/__${product.id}__}" method="POST" enctype="multipart/form-data">
+                     <input type="file" name="file" id="selectedFile" style="display: none;" onchange="form.submit()"/>
+                     <input type="button" th:value="#{profile.image.upload}" value="Загрузити Фото"
+                            onclick="document.getElementById('selectedFile').click();"/>
+                 </form>
+             </div>
          </div>
         <!-- <div class="single-prd-item">
             <img class="img-fluid" src="img/category/s-p1.jpg" alt="">

@@ -19,4 +19,14 @@ public class FileStorageConfiguration {
         log.info("BasePath created: ", baseDir.getAbsolutePath());
         return baseDir.getAbsolutePath();
     }
+
+    @Bean(name= "productPath")
+    public String productPuth () {
+        File baseDir = new File("uploads/products");
+        if (!baseDir.exists()){
+            baseDir.mkdir();
+        }
+        log.info("ProductPath created: ", baseDir.getAbsolutePath());
+        return baseDir.getAbsolutePath();
+    }
 }

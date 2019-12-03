@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="base-layout :: head">
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,8 +9,8 @@
     <div class="container">
         <div class="card text-center card-product" th:each="product : ${products}">
             <div class="card-product__img">
-                <img class="card-img" src="img/product/product1.png" alt="img">
-
+                <div class="card-img" th:if="*{product.photo==null}"><img width="200" src="/resources/images/Product_icon.png" alt="img"></div>
+                <div th:unless="*{product.photo==null}"><img width="200" th:src="'/resources/uploads/' + *{product.photo}"></div>
             </div>
             <div class="card-body">
                     <p class="card-product__price"><span th:text="${product.price}"></span></p>
