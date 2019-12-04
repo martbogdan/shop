@@ -6,6 +6,7 @@
 </head>
 <body>
 <div th:replace="base-layout :: header"></div>
+<div sec:authorize="hasAuthority('ADMIN')">
 <h3>Add new Category</h3>
 <div class="container-fluid">
     <form action="/category/addCategory" th:action="@{/category/addCategory}" th:object="${newCategory}" method="Post">
@@ -61,6 +62,7 @@
         </table>
     </div>
 </form>
+</div>
 </body>
 </html>
 
