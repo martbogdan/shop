@@ -12,7 +12,7 @@
               <div class="card text-center card-product" >
                    <div class="card-product__img">
                      <div class="card-img" th:if="*{product.photo==null}"><img width="200" src="/resources/images/Product_icon.png" alt="img"></div>
-                       <div th:unless="*{product.photo==null}"><img width="200" th:src="'/resources/uploads/' + *{product.photo}"></div>
+                       <div th:unless="*{product.photo==null}"><img width="200" th:src="'/resources/uploads/products/' + *{product.photo}"></div>
                    </div>
                    <div class="card-body">
                     <p class="card-product__price"><span th:text="${product.price}"></span></p>

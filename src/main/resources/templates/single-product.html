@@ -13,7 +13,7 @@
     <div class="owl-carousel owl-theme s_Product_carousel">
          <div class="single-prd-item">
              <div class="img-fluid" th:if="*{product.photo==null}"><img width="200" src="/resources/images/Product_icon.png" alt="img"></div>
-             <div th:unless="*{product.photo==null}"><img width="200" th:src="'/resources/uploads/' + *{product.photo}"></div>
+             <div th:unless="*{product.photo==null}"><img width="200" th:src="'/resources/uploads/products/' + *{product.photo}"></div>
              <div sec:authorize="hasAuthority('ADMIN')">
                  <form action="/product/uploadProductPhoto" th:action="@{/product/uploadProductPhoto/__${product.id}__}" method="POST" enctype="multipart/form-data">
                      <input type="file" name="file" id="selectedFile" style="display: none;" onchange="form.submit()"/>
