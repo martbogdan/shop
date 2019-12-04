@@ -68,6 +68,7 @@ public class ProductController {
                 newProduct.getQuantity(),
                 newProduct.getCategory()));
         model.addFlashAttribute("product_error", "Product added successfully");
+        log.info("Added new product: ", newProduct);
         return "redirect:/user/profile";
     }
 
@@ -86,6 +87,16 @@ public class ProductController {
             log.error("Error saving file", e);
         }
        return "redirect:/product/all";
+    }
+
+    @GetMapping("deleteProduct/{id}")
+    public String deleteProduct (@PathVariable("id") Long id, @ModelAttribute("product") Product product) {
+        Product productToDelete = productService.getProductById(id);
+        if (productToDelete != null) {
+            productService.delete(id);
+            log.info("Deleted produc: ", productToDelete);
+        }
+        return "redirect:/product/all";
     }
 
 }

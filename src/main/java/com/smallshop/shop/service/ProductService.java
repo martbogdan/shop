@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -60,5 +61,11 @@ public class ProductService {
             productDB.setPhoto(product.getPhoto());
         }
         return productRepository.save(productDB);
+    }
+    public void delete (Long id) {
+        Optional<Product> toDelete = productRepository.findById(id);
+        if (toDelete.isPresent()) {
+            productRepository.delete(toDelete.get());
+        }
     }
 }

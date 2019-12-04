@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Data
@@ -15,7 +16,11 @@ public class Product {
     private String name;
     private Double price;
     private Integer quantity;
+
+    @Column(name = "description",length = 255000)
+    @Size(max = 255000)
     private String description;
+
     @ToString.Exclude
     @ManyToOne
     private Category category;

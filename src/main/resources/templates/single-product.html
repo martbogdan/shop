@@ -20,6 +20,9 @@
                      <input type="button" th:value="#{profile.image.upload}" value="Загрузити Фото"
                             onclick="document.getElementById('selectedFile').click();"/>
                  </form>
+                 <form action="/product/deleteProduct/" th:action="@{/product/deleteProduct/__${product.id}__}" method="get">
+                     <input type="submit" name="delete-prod" id="delete-product" value="Delete"/>
+                 </form>
              </div>
          </div>
         <!-- <div class="single-prd-item">
