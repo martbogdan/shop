@@ -50,7 +50,6 @@ public class ProductController {
         Category category = categoryService.getCategoryById(categoryId);
         model.addAttribute("category", category);
         model.addAttribute("categoryProducts", productService.getAllByCategory(category.getId()));
-        System.out.println(productService.getAllByCategory(category.getId()));
         return "products-category";
     }
 
@@ -68,7 +67,7 @@ public class ProductController {
                 newProduct.getQuantity(),
                 newProduct.getCategory()));
         model.addFlashAttribute("product_error", "Product added successfully");
-        log.info("Added new product: ", newProduct);
+        log.info("Added new product: " + newProduct.toString());
         return "redirect:/user/profile";
     }
 
@@ -94,7 +93,7 @@ public class ProductController {
         Product productToDelete = productService.getProductById(id);
         if (productToDelete != null) {
             productService.delete(id);
-            log.info("Deleted produc: ", productToDelete);
+            log.info("Deleted product: " + productToDelete.toString());
         }
         return "redirect:/product/all";
     }
