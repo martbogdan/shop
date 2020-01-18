@@ -1,0 +1,11 @@
+
+.btn {
+    padding: 10px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid grey;
+    outline: none;
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+}

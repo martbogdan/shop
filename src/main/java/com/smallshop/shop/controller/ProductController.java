@@ -1,12 +1,16 @@
 package com.smallshop.shop.controller;
 
+import com.smallshop.shop.dao.entity.Cart;
 import com.smallshop.shop.dao.entity.Category;
 import com.smallshop.shop.dao.entity.Product;
+import com.smallshop.shop.dao.entity.User;
+import com.smallshop.shop.service.CartService;
 import com.smallshop.shop.service.CategoryService;
 import com.smallshop.shop.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +28,8 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CartService cartService;
     @Autowired
     @Qualifier("basePath")
     private String basePath;
@@ -96,6 +102,25 @@ public class ProductController {
             log.info("Deleted product: " + productToDelete.toString());
         }
         return "redirect:/product/all";
+    }
+
+    @PostMapping("/addProductToCart")
+    public String addToCart (@AuthenticationPrincipal User user, @RequestParam Long id, Model model){
+        if (user != null){
+            Product product = productService.getProductById(id);
+            Cart cart = cartService.getCartByUserAndProduct(user, product);
+            if (cart == null){
+                cartService.save(user, product);
+                model.addAttribute("message", "Product added to cart");
+            } else {
+                model.addAttribute("message", "Product is already in the basket");
+            }
+        }else {
+            model.addAttribute("message", "Please, sign in");
+        }
+        Iterable<Product> products = productService.getAll();
+        model.addAttribute("products", products);
+        return "products";
     }
 
 }

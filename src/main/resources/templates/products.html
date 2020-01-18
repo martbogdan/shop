@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="base-layout :: head">
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/product.css" media="screen" th:href="@{/scc/product.css}"/>
     <title>Title</title>
 </head>
 <body>
@@ -17,9 +18,11 @@
                    <div class="card-body">
                     <p class="card-product__price"><span th:text="${product.price}"></span></p>
                     <h4 class="card-product__title"><a href="single-product.html" th:href="@{/product/single/{productId}(productId=${product.id})}"><span th:text="${product.name}"></span></a></h4>
+                       <button class="btn">Add to cart</button>
                     <p><span th:text="${product.description}"></span> </p>
                    </div>
               </div>
+                <script src="js/catalog.js"></script>
             </div>
         </div>
     </div>

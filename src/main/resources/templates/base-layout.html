@@ -31,6 +31,7 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/cart}">Cart</a> </li>
                 <li>
                     <a th:if="${#locale.language=='en'}" href="?lang=uk"><img src="/resources/images/flags/gb.png" /></a>
                     <a th:if="${#locale.language=='uk'}" href="?lang=en"><img src="/resources/images/flags/ua.png" /></a>
