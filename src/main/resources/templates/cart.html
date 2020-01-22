@@ -7,6 +7,35 @@
 <body>
 <div th:replace="base-layout :: header"></div>
 CART
+<div >
+    <form th:action="@{/cart}" th:method="get">
+        <table class="table" align="">
+            <thead>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Sum</th>
+            <th>Action</th>
+            </thead>
+            <tbody>
+<!--            <tr th:each="product : ${cartProducts}">-->
+            <tr th:each="cartRow : ${cartRows}">
+                <td th:text="${cartRow.product.name}"></td>
+                <td th:text="${cartRow.product.price}"></td>
+                <td th:text="${cartRow.quantity}"></td>
+                <td th:text="${cartRow.product.price*cartRow.quantity}"></td>
+<!--                <td th:text="${product.name}"></td>-->
+<!--                <td th:text="${product.price}"></td>-->
+<!--                <td th:text="${product.quantity}"></td>-->
+<!--                <td th:text="${product.price*product.quantity}"></td>-->
 
+                <td><div><a th:href="@{/deleteProduct(id=${cartRow.product.id})}">Delete</a></div></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+</div>
 </body>
 </html>

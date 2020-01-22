@@ -4,13 +4,17 @@ import com.smallshop.shop.dao.entity.Cart;
 import com.smallshop.shop.dao.entity.Category;
 import com.smallshop.shop.dao.entity.Product;
 import com.smallshop.shop.dao.entity.User;
+import com.smallshop.shop.exceptions.NotFound;
 import com.smallshop.shop.service.CartService;
 import com.smallshop.shop.service.CategoryService;
 import com.smallshop.shop.service.ProductService;
+import com.smallshop.shop.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.NotActiveException;
 
 @Controller
 @RequestMapping("/product")
@@ -30,6 +35,8 @@ public class ProductController {
     private CategoryService categoryService;
     @Autowired
     private CartService cartService;
+    @Autowired
+    private UserService userService;
     @Autowired
     @Qualifier("basePath")
     private String basePath;
@@ -105,22 +112,29 @@ public class ProductController {
     }
 
     @PostMapping("/addProductToCart")
-    public String addToCart (@AuthenticationPrincipal User user, @RequestParam Long id, Model model){
+    public String addToCart (/*@AuthenticationPrincipal User user,*/ @RequestParam Long id, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        User user = userService.getUserByUsername(userName).orElseThrow(NotFound::new);
         if (user != null){
             Product product = productService.getProductById(id);
             Cart cart = cartService.getCartByUserAndProduct(user, product);
             if (cart == null){
                 cartService.save(user, product);
                 model.addAttribute("message", "Product added to cart");
+                System.out.println("1 Product added to cart");
             } else {
                 model.addAttribute("message", "Product is already in the basket");
+                System.out.println("2 Product is already in the basket");
             }
         }else {
             model.addAttribute("message", "Please, sign in");
+            System.out.println("3 Please, sign in");
         }
         Iterable<Product> products = productService.getAll();
         model.addAttribute("products", products);
-        return "products";
+        System.out.println("4 END");
+        return "redirect:/product/all";
     }
 
 }
