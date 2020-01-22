@@ -64,6 +64,14 @@ public class CartController {
         model.addAttribute("message", "Product has been removed from the cart");
         return "cart";
      }
+    @GetMapping("/deleteProductFromCart")
+    public String deleteProductFromCart(@RequestParam Long id) {
+        Cart deletedCart = cartService.getCartRawById(id);
+        if (deletedCart != null) {
+            cartService.delete(deletedCart.getId());
+        }
+        return "forward:/cart";
+    }
 
 
      private Cart getCartByUserAndProductId (User user, Long id){

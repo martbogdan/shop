@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartService {
@@ -26,9 +27,18 @@ public class CartService {
     public Cart getCartByUserAndProduct (User user, Product product){
         return cartRepository.findByUserAndProduct(user, product);
     }
+    public Cart getCartRawById (Long id){
+        return cartRepository.findById(id).orElseThrow(NotFound::new);
+    }
 
     public void delete (Cart cart){
         cartRepository.delete(cart);
+    }
+    public void delete (Long id){
+        Optional<Cart> toDelete = cartRepository.findById(id);
+        if (toDelete.isPresent()) {
+            cartRepository.delete(toDelete.get());
+        }
     }
     public Cart save (User user, Product product){
         Cart cart = new Cart();
