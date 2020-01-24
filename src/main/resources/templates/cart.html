@@ -7,7 +7,6 @@
 <body>
 <div th:replace="base-layout :: header"></div>
 CART
-<form th:action="@{/cart}" th:method="get">
 <div class="container">
         <table class="table" align="center">
             <thead>
@@ -22,7 +21,7 @@ CART
                 <td th:text="${cartRow.product.name}"></td>
                 <td th:text="${cartRow.product.price}"></td>
                 <td >
-                    <div class="container-counter">
+                    <div >
                         <form action="/cart/updateCartRaw" th:action="@{/cart/updateCartRaw(id=${cartRow.id})}" th:method="get">
                         <input type="hidden" name="id" th:value="${cartRow.id}">
                         <input type="text" name="qty" id="sst" maxlength="12" th:value="${cartRow.quantity}" title="Quantity:"
@@ -40,9 +39,15 @@ CART
                 <td><div><a th:href="@{/cart/deleteProductFromCart(id=${cartRow.id})}">Delete</a></div></td>
             </tr>
             </tbody>
+            <tr></tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Total</td>
+                <td th:text="${sumOfCartProducts}"></td>
+            </tr>
         </table>
 </div>
-</form>
 </div>
 </body>
 </html>

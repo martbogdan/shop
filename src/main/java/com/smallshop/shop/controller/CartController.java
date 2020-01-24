@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,15 +47,29 @@ public class CartController {
         String userName = authentication.getName();
         User user = userService.getUserByUsername(userName).orElseThrow(NotFound::new);
         List<Product> products = new ArrayList<>();
-        Iterable<Cart> cartRows = cartService.getCartByUser(user);
+        List<Cart> cartRows = cartService.getCartByUser(user);
         for (Cart cart : cartRows) {
             products.add(cart.getProduct());
         }
+        double sum=0.00;
+        for (Cart cart : cartRows) {
+           sum = sum + (cart.getProduct().getPrice()*cart.getQuantity());
+        }
+        double roundedSum = round(sum,2);
         model.addAttribute("cartProducts", products);
         model.addAttribute("cartRows", cartRows);
+        model.addAttribute("sumOfCartProducts", roundedSum);
+        model.addAttribute("cartSize", products.size());
+        log.info("work");
         return "cart";
     }
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
 
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
     //     @PostMapping(params = "deleteProduct")
 //     public String deleteProduct (/*@AuthenticationPrincipal User user,*/ @RequestParam Long id, Model model){
 //         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -77,7 +93,7 @@ public class CartController {
     public String updateCartQuantity(@RequestParam Long id, @RequestParam Integer qty) {
         Cart updateCart = cartService.getCartRawById(id);
         cartService.updateQuantity(updateCart, qty);
-        System.out.println("uppp");
+        log.info("updated");
         return "forward:/cart";
     }
 
