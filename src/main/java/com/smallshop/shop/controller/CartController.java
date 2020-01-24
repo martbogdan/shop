@@ -40,7 +40,7 @@ public class CartController {
     }
 
     @GetMapping()
-    public String cart (/*@AuthenticationPrincipal User user,*/ Model model){
+    public String cart(/*@AuthenticationPrincipal User user,*/ Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.getUserByUsername(userName).orElseThrow(NotFound::new);
@@ -52,18 +52,18 @@ public class CartController {
         model.addAttribute("cartProducts", products);
         model.addAttribute("cartRows", cartRows);
         return "cart";
-     }
+    }
 
-     @PostMapping(params = "deleteProduct")
-     public String deleteProduct (/*@AuthenticationPrincipal User user,*/ @RequestParam Long id, Model model){
-         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-         String userName = authentication.getName();
-         User user = userService.getUserByUsername(userName).orElseThrow(NotFound::new);
-        cartService.delete(getCartByUserAndProductId(user, id));
-        cart(model);
-        model.addAttribute("message", "Product has been removed from the cart");
-        return "cart";
-     }
+    //     @PostMapping(params = "deleteProduct")
+//     public String deleteProduct (/*@AuthenticationPrincipal User user,*/ @RequestParam Long id, Model model){
+//         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//         String userName = authentication.getName();
+//         User user = userService.getUserByUsername(userName).orElseThrow(NotFound::new);
+//        cartService.delete(getCartByUserAndProductId(user, id));
+//        cart(model);
+//        model.addAttribute("message", "Product has been removed from the cart");
+//        return "cart";
+//     }
     @GetMapping("/deleteProductFromCart")
     public String deleteProductFromCart(@RequestParam Long id) {
         Cart deletedCart = cartService.getCartRawById(id);
@@ -73,10 +73,18 @@ public class CartController {
         return "forward:/cart";
     }
 
+    @GetMapping("/updateCartRaw")
+    public String updateCartQuantity(@RequestParam Long id, @RequestParam Integer qty) {
+        Cart updateCart = cartService.getCartRawById(id);
+        cartService.updateQuantity(updateCart, qty);
+        System.out.println("uppp");
+        return "forward:/cart";
+    }
 
-     private Cart getCartByUserAndProductId (User user, Long id){
+
+    private Cart getCartByUserAndProductId(User user, Long id) {
         Product product = productService.getProductById(id);
         Cart cart = cartService.getCartByUserAndProduct(user, product);
         return cart;
-     }
+    }
 }

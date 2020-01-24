@@ -21,37 +21,40 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public List<Cart> getCartByUser (User user){
+    public List<Cart> getCartByUser(User user) {
         return cartRepository.findByUser(user);
     }
-    public Cart getCartByUserAndProduct (User user, Product product){
+
+    public Cart getCartByUserAndProduct(User user, Product product) {
         return cartRepository.findByUserAndProduct(user, product);
     }
-    public Cart getCartRawById (Long id){
+
+    public Cart getCartRawById(Long id) {
         return cartRepository.findById(id).orElseThrow(NotFound::new);
     }
 
-    public void delete (Cart cart){
+    public void delete(Cart cart) {
         cartRepository.delete(cart);
     }
-    public void delete (Long id){
+
+    public void delete(Long id) {
         Optional<Cart> toDelete = cartRepository.findById(id);
         if (toDelete.isPresent()) {
             cartRepository.delete(toDelete.get());
         }
     }
-    public Cart save (User user, Product product){
+
+    public Cart save(User user, Product product) {
         Cart cart = new Cart();
         cart.setUser(user);
         cart.setProduct(product);
         cart.setQuantity(1);
         return cartRepository.save(cart);
     }
-    public Cart updateQuantity (Cart cart){
+
+    public Cart updateQuantity(Cart cart, Integer qty) {
         Cart cartDB = cartRepository.findById(cart.getId()).orElseThrow(NotFound::new);
-        if (!StringUtils.isEmpty(cart.getQuantity())){
-            cartDB.setQuantity(cart.getQuantity());
-        }
-        return cartDB;
+        cartDB.setQuantity(qty);
+        return cartRepository.save(cartDB);
     }
 }

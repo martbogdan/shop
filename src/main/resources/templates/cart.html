@@ -7,9 +7,9 @@
 <body>
 <div th:replace="base-layout :: header"></div>
 CART
-<div >
-    <form th:action="@{/cart}" th:method="get">
-        <table class="table" align="">
+<form th:action="@{/cart}" th:method="get">
+<div class="container">
+        <table class="table" align="center">
             <thead>
             <th>Name</th>
             <th>Price</th>
@@ -17,25 +17,32 @@ CART
             <th>Sum</th>
             <th>Action</th>
             </thead>
-            <tbody>
-<!--            <tr th:each="product : ${cartProducts}">-->
-            <tr th:each="cartRow : ${cartRows}">
+            <tbody th:each="cartRow : ${cartRows}">
+            <tr >
                 <td th:text="${cartRow.product.name}"></td>
                 <td th:text="${cartRow.product.price}"></td>
-                <td th:text="${cartRow.quantity}"></td>
+                <td >
+                    <div class="container-counter">
+                        <form action="/cart/updateCartRaw" th:action="@{/cart/updateCartRaw(id=${cartRow.id})}" th:method="get">
+                        <input type="hidden" name="id" th:value="${cartRow.id}">
+                        <input type="text" name="qty" id="sst" maxlength="12" th:value="${cartRow.quantity}" title="Quantity:"
+                               class="input-text qty">
+<!--                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"-->
+<!--                                class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>-->
+<!--                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value&#45;&#45;;return false;"-->
+<!--                                class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>-->
+                        <button class="button" type="submit">Set Quantity</button>
+                        </form>
+                    </div>
+                </td>
                 <td th:text="${cartRow.product.price*cartRow.quantity}"></td>
-<!--                <td th:text="${product.name}"></td>-->
-<!--                <td th:text="${product.price}"></td>-->
-<!--                <td th:text="${product.quantity}"></td>-->
-<!--                <td th:text="${product.price*product.quantity}"></td>-->
 
                 <td><div><a th:href="@{/cart/deleteProductFromCart(id=${cartRow.id})}">Delete</a></div></td>
             </tr>
             </tbody>
         </table>
-    </form>
 </div>
-
+</form>
 </div>
 </body>
 </html>
