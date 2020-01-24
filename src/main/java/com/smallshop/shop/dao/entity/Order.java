@@ -3,7 +3,7 @@ package com.smallshop.shop.dao.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
@@ -13,7 +13,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "date_of_creation")
-    private LocalDateTime dateCreation;
+    private Date dateCreation;
     private String comment;
     @ManyToOne
     private User user;

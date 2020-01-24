@@ -8,6 +8,7 @@ import com.smallshop.shop.exceptions.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,12 +28,11 @@ public class OrderService {
     public List<Order> getAllByUserId (Long userId) {
         return orderRepository.findAllByUser_UserId(userId);
     }
-    public Order saveOrder (Order order) {
-        User user = userRepository.findById(order.getUser().getUserId()).orElseThrow(NotFound::new);
+    public Order saveOrder (User user, Date date, String comment) {
         Order newOrder = new Order();
-        newOrder.setDateCreation(order.getDateCreation());
+        newOrder.setDateCreation(date);
         newOrder.setUser(user);
-        newOrder.setComment(order.getComment());
+        newOrder.setComment(comment);
         return orderRepository.save(newOrder);
     }
 }
