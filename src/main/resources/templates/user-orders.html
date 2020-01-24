@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base-layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="base-layout :: header"></div>
+<div class="container">
+    <h3>Orders</h3>
+    <div >
+        <table class="table" align="center">
+            <thead>
+            <th>Date</th>
+            <th>Comment</th>
+            <th>Status</th>
+            </thead>
+            <tbody th:each="order : ${orders}">
+            <tr >
+
+                <td th:text="*{#dates.format(order.dateCreation, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${order.comment}"></td>
+                <td th:text="${order.orderStatus}"></td>
+                <td><form th:action="@{/cart}" th:method="get">
+                    <button class="button" type="submit">details</button>
+                </form></td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+</body>
+</html>

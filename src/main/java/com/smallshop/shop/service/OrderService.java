@@ -1,6 +1,7 @@
 package com.smallshop.shop.service;
 
 import com.smallshop.shop.dao.entity.Order;
+import com.smallshop.shop.dao.entity.OrderStatus;
 import com.smallshop.shop.dao.entity.User;
 import com.smallshop.shop.dao.repository.OrderRepository;
 import com.smallshop.shop.dao.repository.UserRepository;
@@ -33,6 +34,7 @@ public class OrderService {
         newOrder.setDateCreation(date);
         newOrder.setUser(user);
         newOrder.setComment(comment);
+        newOrder.setOrderStatus(OrderStatus.ACTIVE);
         return orderRepository.save(newOrder);
     }
 }

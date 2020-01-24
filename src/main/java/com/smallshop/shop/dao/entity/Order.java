@@ -17,4 +17,5 @@ public class Order {
     private String comment;
     @ManyToOne
     private User user;
+    private OrderStatus orderStatus;
 }
