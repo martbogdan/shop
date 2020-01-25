@@ -71,6 +71,7 @@ public class OrderController {
         double roundedSum = round(sum, 2);
         model.addAttribute("orderItems", orderItems);
         model.addAttribute("sumOfOrderProducts", roundedSum);
+        model.addAttribute("order", order);
         return "order-details";
     }
 

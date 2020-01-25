@@ -10,6 +10,7 @@ CART
 <div class="container">
         <table class="table" align="center">
             <thead>
+            <th>Photo</th>
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
@@ -18,6 +19,10 @@ CART
             </thead>
             <tbody th:each="cartRow : ${cartRows}">
             <tr >
+                <td>
+                    <div class="card-img" th:if="*{cartRow.product.photo==null}"><img width="50" src="/resources/images/Product_icon.png" alt="img"></div>
+                    <div th:unless="*{cartRow.product.photo==null}"><img width="50" th:src="'/resources/uploads/products/' + *{cartRow.product.photo}"></div>
+                </td>
                 <td th:text="${cartRow.product.name}"></td>
                 <td th:text="${cartRow.product.price}"></td>
                 <td >
@@ -43,8 +48,8 @@ CART
             <tr>
                 <td></td>
                 <td></td>
-                <td>Total</td>
-                <td th:text="${sumOfCartProducts}"></td>
+                <td><h3>Total:</h3></td>
+                <td ><h3 th:text="${sumOfCartProducts}"></h3></td>
             </tr>
         </table>
 
