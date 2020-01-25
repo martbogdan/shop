@@ -38,6 +38,15 @@ public class OrderItemsService {
         orderItem.setOrder(order);
         orderItem.setProduct(product);
         orderItem.setQuantity(quantity);
+        orderItem.setOrderPrice(product.getPrice());
         return orderItemsRepository.save(orderItem);
+    }
+
+    public List<OrderItems> getItemsByOrder(Order order) {
+        return orderItemsRepository.findByOrder(order);
+    }
+
+    public List<OrderItems> getItemsByOrderId(Long orderId) {
+        return orderItemsRepository.findAllByOrderId(orderId);
     }
 }

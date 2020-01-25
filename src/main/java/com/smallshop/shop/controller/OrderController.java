@@ -1,7 +1,6 @@
 package com.smallshop.shop.controller;
 
-import com.smallshop.shop.dao.entity.Order;
-import com.smallshop.shop.dao.entity.User;
+import com.smallshop.shop.dao.entity.*;
 import com.smallshop.shop.exceptions.NotFound;
 import com.smallshop.shop.service.OrderItemsService;
 import com.smallshop.shop.service.OrderService;
@@ -13,14 +12,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -49,7 +45,7 @@ public class OrderController {
     }
 
     @GetMapping("/user/orders")
-    public String getOrdersByUser(Model model){
+    public String getOrdersByUser(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.getUserByUsername(userName).orElseThrow(NotFound::new);
@@ -62,5 +58,27 @@ public class OrderController {
         });
         model.addAttribute("orders", orders);
         return "user-orders";
+    }
+
+    @GetMapping("/orderDetails")
+    public String getOrderDetails(@RequestParam Long id, Model model) {
+        Order order = orderService.getOrderById(id);
+        List<OrderItems> orderItems = orderItemsService.getItemsByOrderId(order.getId());
+        double sum = 0.00;
+        for (OrderItems orderItem : orderItems) {
+            sum = sum + (orderItem.getOrderPrice() * orderItem.getQuantity());
+        }
+        double roundedSum = round(sum, 2);
+        model.addAttribute("orderItems", orderItems);
+        model.addAttribute("sumOfOrderProducts", roundedSum);
+        return "order-details";
+    }
+
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
