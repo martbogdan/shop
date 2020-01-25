@@ -14,7 +14,11 @@
          <div class="single-prd-item">
              <div class="img-fluid" th:if="*{product.photo==null}"><img width="200" src="/resources/images/Product_icon.png" alt="img"></div>
              <div th:unless="*{product.photo==null}"><img width="200" th:src="'/resources/uploads/products/' + *{product.photo}"></div>
-             <button class="button" th:action="@{/addToCart}" th:method="post">add to cart</button>
+             <form th:action="@{/product/addProductToCart}" method="post">
+                 <input type="hidden" name="_csrf" th:value="${#authentication.authorities}">
+                 <input type="hidden" name="id" th:value="${product.id}">
+                 <button class="button" type="submit">add to cart</button>
+             </form>
              <div sec:authorize="hasAuthority('ADMIN')">
                  <form action="/product/uploadProductPhoto" th:action="@{/product/uploadProductPhoto/__${product.id}__}" method="POST" enctype="multipart/form-data">
                      <input type="file" name="file" id="selectedFile" style="display: none;" onchange="form.submit()"/>

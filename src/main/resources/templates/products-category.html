@@ -9,15 +9,28 @@
 
 <div class="container">
     <input type="hidden" name="categoryId" th:value="${category.id}">
-    <div class="card text-center card-product" th:each="product : ${categoryProducts}">
-        <div class="card-product__img">
-            <div class="card-img" th:if="*{product.photo==null}"><img width="200" src="/resources/images/Product_icon.png" alt="img"></div>
-            <div th:unless="*{product.photo==null}"><img width="200" th:src="'/resources/uploads/products/' + *{product.photo}"></div>
-        </div>
-        <div class="card-body">
-            <p class="card-product__price"><span th:text="${product.price}"></span></p>
-            <h4 class="card-product__title"><a href="single-product.html" th:href="@{/product/single/{productId}(productId=${product.id})}"><span th:text="${product.name}"></span></a></h4>
-            <p><span th:text="${product.description}"></span> </p>
+    <div class="col-md-6 col-lg-4 col-xl-3" th:each="product : ${categoryProducts}">
+        <div class="card text-center card-product" >
+            <form th:action="@{/product/addProductToCart}" method="post">
+                <input type="hidden" name="_csrf" th:value="${#authentication.authorities}">
+                <input type="hidden" name="id" th:value="${product.id}">
+                <div class="card-product__img">
+                    <div class="card-img" th:if="*{product.photo==null}"><img width="200"
+                                                                              src="/resources/images/Product_icon.png"
+                                                                              alt="img"></div>
+                    <div th:unless="*{product.photo==null}"><img width="200"
+                                                                 th:src="'/resources/uploads/products/' + *{product.photo}">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-product__price"><span th:text="${product.price}"></span></p>
+                    <h4 class="card-product__title"><a href="single-product.html"
+                                                       th:href="@{/product/single/{productId}(productId=${product.id})}"><span
+                            th:text="${product.name}"></span></a></h4>
+                    <button class="btn" type="submit">Add to cart</button>
+                    <p><span th:text="${product.description}"></span></p>
+                </div>
+            </form>
         </div>
     </div>
 </div>
