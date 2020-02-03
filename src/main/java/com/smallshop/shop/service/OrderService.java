@@ -23,6 +23,9 @@ public class OrderService {
     public List<Order> getAllOrders () {
         return orderRepository.findAll();
     }
+    public List<Order> getAllByStatus (OrderStatus status) {
+        return orderRepository.findAllByOrderStatus(status);
+    }
     public Order getOrderById (Long id) {
         return orderRepository.findById(id).orElseThrow(NotFound::new);
     }

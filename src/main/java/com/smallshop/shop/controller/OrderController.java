@@ -82,4 +82,10 @@ public class OrderController {
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
+    @GetMapping("/clients-orders")
+    public String getClientOrders (Model model){
+        List<Order> orderList = orderService.getAllOrders();
+        model.addAttribute("allOrders", orderList);
+        return "clients-orders";
+    }
 }

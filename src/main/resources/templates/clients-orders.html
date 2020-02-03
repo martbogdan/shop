@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head th:replace="base-layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="base-layout :: header"></div>
+<div sec:authorize="hasAuthority('ADMIN')">
+    <table class="table" align="center">
+        <thead>
+        <th>Date</th>
+        <th>Comment</th>
+        <th>Status</th>
+        <th>user</th>
+        </thead>
+        <tbody th:each="allorder : ${allOrders}">
+        <tr>
+
+            <td th:text="*{#dates.format(allorder.dateCreation, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${allorder.comment}"></td>
+            <td th:text="${allorder.orderStatus}"></td>
+            <td th:text="${allorder.user.email}"></td>
+<!--            <td>-->
+<!--                <div>-->
+<!--                    <form action="/orderDetails" th:action="@{/orderDetails(id=${order.id})}" th:method="get">-->
+<!--                        <input type="hidden" name="id" th:value="${order.id}">-->
+<!--                        <button class="button" type="submit">details</button>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </td>-->
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
