@@ -67,6 +67,9 @@ public class UserService {
         if (!StringUtils.isEmpty(user.getUsername())) {
             userDB.setUsername(user.getUsername());
         }
+        if (!StringUtils.isEmpty(user.getPhoneNumber())) {
+            userDB.setPhoneNumber(user.getPhoneNumber());
+        }
         userRepository.save(userDB);
         return userDB;
     }
