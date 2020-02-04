@@ -55,11 +55,34 @@ CART
 
 </div>
 <div class="container">
+
+</div>
+<div class="container">
     <div th:if="${cartSize>0}">
         <form action="/order" th:action="@{/order}" th:method="post">
-            <h3>Comment to order</h3>
-            <input type="text" name="comment" maxlength="255">
-            <button class="button" type="submit">Order</button>
+            <div class="form-group">
+                <label for="odc">Delivery</label>
+                <select id="odc" name="odc"  >
+                    <option disabled>Please select...</option>
+                    <option th:each="delivCompany : ${delivCompanies}" th:value="${delivCompany.id}"
+                            th:text="${delivCompany.companyName}"></option>
+                </select>
+
+            </div>
+            <div class="form-group">
+                <input type="text" name="address" maxlength="1000" th:rows="3">
+            </div>
+            <div class="form-group">
+                <h3>Comment to order</h3>
+                <input type="text" name="comment" maxlength="1000" th:rows="3">
+            </div>
+            <div class="form-group">
+                <input type="submit" name="register-submit"
+                       id="register-submit"
+                       class="form-control btn btn-info"
+                       value="Add order">
+            </div>
+<!--            <button class="button" type="submit">Order</button>-->
         </form>
     </div>
 </div>

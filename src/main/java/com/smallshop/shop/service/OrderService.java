@@ -1,6 +1,7 @@
 package com.smallshop.shop.service;
 
 import com.smallshop.shop.dao.entity.Order;
+import com.smallshop.shop.dao.entity.OrderDeliveryCompany;
 import com.smallshop.shop.dao.entity.OrderStatus;
 import com.smallshop.shop.dao.entity.User;
 import com.smallshop.shop.dao.repository.OrderRepository;
@@ -32,12 +33,14 @@ public class OrderService {
     public List<Order> getAllByUserId (Long userId) {
         return orderRepository.findAllByUser_UserId(userId);
     }
-    public Order saveOrder (User user, Date date, String comment) {
+    public Order saveOrder (User user, Date date, String comment, OrderDeliveryCompany odc, String address) {
         Order newOrder = new Order();
         newOrder.setDateCreation(date);
         newOrder.setUser(user);
         newOrder.setComment(comment);
         newOrder.setOrderStatus(OrderStatus.ACTIVE);
+        newOrder.setOrderDeliveryCompany(odc);
+        newOrder.setDeliveryAddress(address);
         return orderRepository.save(newOrder);
     }
 }

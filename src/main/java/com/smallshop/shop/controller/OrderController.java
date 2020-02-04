@@ -5,7 +5,6 @@ import com.smallshop.shop.exceptions.NotFound;
 import com.smallshop.shop.service.OrderItemsService;
 import com.smallshop.shop.service.OrderService;
 import com.smallshop.shop.service.UserService;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,12 +33,12 @@ public class OrderController {
     private OrderItemsService orderItemsService;
 
     @PostMapping("/order")
-    public String createOrder(@RequestParam String comment, Model model) {
+    public String createOrder(@RequestParam String comment, @RequestParam OrderDeliveryCompany odc, @RequestParam String address, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.getUserByUsername(userName).orElseThrow(NotFound::new);
 
-        Order order = orderService.saveOrder(user, new Date(), comment);
+        Order order = orderService.saveOrder(user, new Date(), comment, odc, address);
         orderItemsService.saveOrderItems(user, order);
         return "index";
     }

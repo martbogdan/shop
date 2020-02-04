@@ -14,6 +14,7 @@
         <th>Status</th>
         <th>user Email</th>
         <th>user PhoneNumber</th>
+        <th>user Name</th>
         </thead>
         <tbody th:each="allorder : ${allOrders}">
         <tr>
@@ -23,6 +24,7 @@
             <td th:text="${allorder.orderStatus}"></td>
             <td th:text="${allorder.user.email}"></td>
             <td th:text="${allorder.user.phoneNumber}"></td>
+            <td th:text="${allorder.user.firstName+' '+allorder.user.lastName}"></td>
 <!--            <td>-->
 <!--                <div>-->
 <!--                    <form action="/orderDetails" th:action="@{/orderDetails(id=${order.id})}" th:method="get">-->

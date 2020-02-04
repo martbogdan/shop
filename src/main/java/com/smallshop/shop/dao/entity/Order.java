@@ -3,6 +3,7 @@ package com.smallshop.shop.dao.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -18,4 +19,8 @@ public class Order {
     @ManyToOne
     private User user;
     private OrderStatus orderStatus;
+    @OneToOne
+    private OrderDeliveryCompany orderDeliveryCompany;
+    @Size(max = 255)
+    private String deliveryAddress;
 }

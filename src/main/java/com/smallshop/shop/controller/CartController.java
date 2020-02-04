@@ -5,6 +5,7 @@ import com.smallshop.shop.dao.entity.Product;
 import com.smallshop.shop.dao.entity.User;
 import com.smallshop.shop.exceptions.NotFound;
 import com.smallshop.shop.service.CartService;
+import com.smallshop.shop.service.DeliveryCompanyService;
 import com.smallshop.shop.service.ProductService;
 import com.smallshop.shop.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,8 @@ public class CartController {
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
+    @Autowired
+    private DeliveryCompanyService deliveryCompanyService;
 
     @GetMapping()
     public String cart(/*@AuthenticationPrincipal User user,*/ Model model) {
@@ -60,6 +63,7 @@ public class CartController {
         model.addAttribute("cartRows", cartRows);
         model.addAttribute("sumOfCartProducts", roundedSum);
         model.addAttribute("cartSize", products.size());
+        model.addAttribute("delivCompanies", deliveryCompanyService.getAllCompanies());
         log.info("work");
         return "cart";
     }
