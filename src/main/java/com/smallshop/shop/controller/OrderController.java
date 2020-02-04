@@ -63,11 +63,8 @@ public class OrderController {
     public String getOrderDetails(@RequestParam Long id, Model model) {
         Order order = orderService.getOrderById(id);
         List<OrderItems> orderItems = orderItemsService.getItemsByOrderId(order.getId());
-        double sum = 0.00;
-        for (OrderItems orderItem : orderItems) {
-            sum = sum + (orderItem.getOrderPrice() * orderItem.getQuantity());
-        }
-        double roundedSum = round(sum, 2);
+
+        double roundedSum = sumOfOrderItems(orderItems);
         model.addAttribute("orderItems", orderItems);
         model.addAttribute("sumOfOrderProducts", roundedSum);
         model.addAttribute("order", order);
@@ -80,6 +77,14 @@ public class OrderController {
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+    private static double sumOfOrderItems (List<OrderItems> orderItems) {
+        double sum = 0.00;
+        for (OrderItems orderItem : orderItems) {
+            sum = sum + (orderItem.getOrderPrice() * orderItem.getQuantity());
+        }
+        double roundedSum = round(sum, 2);
+        return roundedSum;
     }
     @GetMapping("/clients-orders")
     public String getClientOrders (@RequestParam(defaultValue = "ACTIVE") OrderStatus orderStatus , Model model){
@@ -118,5 +123,16 @@ public class OrderController {
         orderToUpdate.setOrderStatus(orderStatus);
         orderService.updateOrder(orderToUpdate);
         return "redirect:/clients-orders";
+    }
+    @GetMapping("/print-order")
+    public String getPrintOrderPage (@RequestParam Long id, Model model) {
+        List<OrderItems> orderItems = orderItemsService.getItemsByOrderId(id);
+        model.addAttribute("currentDate", new Date());
+        model.addAttribute("order", orderService.getOrderById(id));
+        model.addAttribute("orderItems", orderItems);
+        double itemsSum = sumOfOrderItems(orderItems);
+        model.addAttribute("sumOfOrderProducts", itemsSum);
+        model.addAttribute("listSize", orderItems.size());
+        return "print-order-page";
     }
 }
