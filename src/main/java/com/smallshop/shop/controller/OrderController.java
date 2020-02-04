@@ -4,6 +4,7 @@ import com.smallshop.shop.dao.entity.*;
 import com.smallshop.shop.exceptions.NotFound;
 import com.smallshop.shop.service.OrderItemsService;
 import com.smallshop.shop.service.OrderService;
+import com.smallshop.shop.service.ProductService;
 import com.smallshop.shop.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class OrderController {
     private UserService userService;
     @Autowired
     private OrderItemsService orderItemsService;
+    @Autowired
+    private ProductService productService;
 
     @PostMapping("/order")
     public String createOrder(@RequestParam String comment, @RequestParam OrderDeliveryCompany odc, @RequestParam String address, Model model) {
@@ -121,6 +124,14 @@ public class OrderController {
     public String updateStatus (@RequestParam OrderStatus orderStatus, @RequestParam Long id,Model model){
         Order orderToUpdate = orderService.getOrderById(id);
         orderToUpdate.setOrderStatus(orderStatus);
+        if (orderStatus.equals(OrderStatus.DONE)){
+            List<OrderItems> orderItems = orderItemsService.getItemsByOrderId(id);
+            for (OrderItems item : orderItems){
+                Product product = productService.getProductByName(item.getProduct().getName());
+                product.setQuantity(product.getQuantity()-item.getQuantity());
+                productService.updateProduct(product);
+            }
+        }
         orderService.updateOrder(orderToUpdate);
         return "redirect:/clients-orders";
     }

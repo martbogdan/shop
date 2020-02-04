@@ -20,7 +20,7 @@ public class ProductService {
         return productRepository.findById(id).orElseThrow(NotFound::new);
     }
     public Product getProductByName (String productName) {
-        return productRepository.findProductByName(productName);
+        return productRepository.findByName(productName);
     }
     public List<Product> getAll(){
         return productRepository.findAll();
