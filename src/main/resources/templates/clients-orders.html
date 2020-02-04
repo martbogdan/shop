@@ -7,6 +7,17 @@
 <body>
 <div th:replace="base-layout :: header"></div>
 <div sec:authorize="hasAuthority('ADMIN')">
+    <form action="/clients-orders" th:action="@{/clients-orders}" th:method="get">
+        <div class="form-group">
+            <label for="orderStatus">Status</label>
+            <select id="orderStatus" name="orderStatus"  >
+                <option disabled>Please select...</option>
+                <option th:each="orderstatus : ${orderStatuses}" th:value="${orderstatus}"
+                        th:text="${orderstatus}"></option>
+            </select>
+        </div>
+        <button class="button" type="submit">filter</button>
+    </form>
     <table class="table" align="center">
         <thead>
         <th>Date</th>

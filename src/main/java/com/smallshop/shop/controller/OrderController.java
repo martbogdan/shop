@@ -82,8 +82,20 @@ public class OrderController {
         return bd.doubleValue();
     }
     @GetMapping("/clients-orders")
-    public String getClientOrders (Model model){
-        List<Order> orderList = orderService.getAllOrders();
+    public String getClientOrders (@RequestParam(defaultValue = "ACTIVE") OrderStatus orderStatus , Model model){
+        Set<OrderStatus> orderStatuses = new TreeSet<>();
+        orderStatuses.add(OrderStatus.ACTIVE); orderStatuses.add(OrderStatus.DONE);
+        orderStatuses.add(OrderStatus.CANCELED); orderStatuses.add(OrderStatus.POSTPONED);
+        orderStatuses.add(OrderStatus.SENT); orderStatuses.add(OrderStatus.ALL);
+        model.addAttribute("orderStatuses", orderStatuses);
+
+        List<Order> orderList = null;
+        if (orderStatus.equals(OrderStatus.ALL)){
+            orderList = orderService.getAllOrders();
+        } else {
+            orderList = orderService.getAllByStatus(orderStatus);
+        }
+
         Collections.sort(orderList, new Comparator<Order>() {
             @Override
             public int compare(Order o1, Order o2) {
