@@ -38,16 +38,19 @@
                         <input type="hidden" name="id">
                         <button class="button" type="submit">print</button>
                     </form>
-                    <form >
-                        <input type="hidden" name="id" >
-                        <button class="button" type="submit">postpone</button>
-                    </form>
-                    <form >
-                        <input type="hidden" name="id" >
+                <form action="/clients-orders/status" th:action="@{/clients-orders/status(id=${allorder.id})}" th:method="post">
+                    <input type="hidden" name="id" th:value="${allorder.id}">
+                    <input type="hidden" name="orderStatus" th:value="${allorder.orderStatus.POSTPONED}">
+                    <button class="button" type="submit">postpone</button>
+                </form>
+                    <form action="/clients-orders/status" th:action="@{/clients-orders/status(id=${allorder.id})}" th:method="post">
+                        <input type="hidden" name="id" th:value="${allorder.id}">
+                        <input type="hidden" name="orderStatus" th:value="${allorder.orderStatus.DONE}">
                         <button class="button" type="submit">done</button>
                     </form>
-                    <form >
-                        <input type="hidden" name="id" >
+                    <form action="/clients-orders/status" th:action="@{/clients-orders/status(id=${allorder.id})}" th:method="post">
+                        <input type="hidden" name="id" th:value="${allorder.id}">
+                        <input type="hidden" name="orderStatus" th:value="${allorder.orderStatus.CANCELED}">
                         <button class="button" type="submit">cancel</button>
                     </form>
             </td>

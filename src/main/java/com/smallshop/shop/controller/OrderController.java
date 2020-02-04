@@ -100,4 +100,11 @@ public class OrderController {
         orderService.updateOrder(orderToUpdate);
         return "redirect:/clients-orders";
     }
+    @PostMapping("/clients-orders/status")
+    public String updateStatus (@RequestParam OrderStatus orderStatus, @RequestParam Long id,Model model){
+        Order orderToUpdate = orderService.getOrderById(id);
+        orderToUpdate.setOrderStatus(orderStatus);
+        orderService.updateOrder(orderToUpdate);
+        return "redirect:/clients-orders";
+    }
 }
