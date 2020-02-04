@@ -23,4 +23,5 @@ public class Order {
     private OrderDeliveryCompany orderDeliveryCompany;
     @Size(max = 255)
     private String deliveryAddress;
+    private String adminComment;
 }

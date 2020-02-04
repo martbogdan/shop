@@ -84,7 +84,20 @@ public class OrderController {
     @GetMapping("/clients-orders")
     public String getClientOrders (Model model){
         List<Order> orderList = orderService.getAllOrders();
+        Collections.sort(orderList, new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return o1.getDateCreation().compareTo(o2.getDateCreation());
+            }
+        });
         model.addAttribute("allOrders", orderList);
         return "clients-orders";
+    }
+    @PostMapping("/clients-orders")
+    public String addAdminComment (@RequestParam String adminComment, @RequestParam Long id,Model model){
+        Order orderToUpdate = orderService.getOrderById(id);
+        orderToUpdate.setAdminComment(adminComment);
+        orderService.updateOrder(orderToUpdate);
+        return "redirect:/clients-orders";
     }
 }

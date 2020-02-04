@@ -15,6 +15,9 @@
         <th>user Email</th>
         <th>user PhoneNumber</th>
         <th>user Name</th>
+        <th>Address</th>
+        <th>Actions</th>
+        <th>Admin coment</th>
         </thead>
         <tbody th:each="allorder : ${allOrders}">
         <tr>
@@ -25,6 +28,36 @@
             <td th:text="${allorder.user.email}"></td>
             <td th:text="${allorder.user.phoneNumber}"></td>
             <td th:text="${allorder.user.firstName+' '+allorder.user.lastName}"></td>
+            <td th:text="${allorder.orderDeliveryCompany.companyName+' - '+allorder.deliveryAddress}"></td>
+            <td>
+                    <form >
+                        <input type="hidden" name="id" >
+                        <button class="button" type="submit">details</button>
+                    </form>
+                    <form >
+                        <input type="hidden" name="id">
+                        <button class="button" type="submit">print</button>
+                    </form>
+                    <form >
+                        <input type="hidden" name="id" >
+                        <button class="button" type="submit">postpone</button>
+                    </form>
+                    <form >
+                        <input type="hidden" name="id" >
+                        <button class="button" type="submit">done</button>
+                    </form>
+                    <form >
+                        <input type="hidden" name="id" >
+                        <button class="button" type="submit">cancel</button>
+                    </form>
+            </td>
+            <td>
+                <form action="/clients-orders" th:action="@{/clients-orders(id=${allorder.id})}" th:method="post">
+                    <input type="hidden" name="id" th:value="${allorder.id}">
+                    <input type="text" name="adminComment" maxlength="255" th:value="${allorder.adminComment}">
+                    <button class="button" type="submit">add comment</button>
+                </form>
+            </td>
 <!--            <td>-->
 <!--                <div>-->
 <!--                    <form action="/orderDetails" th:action="@{/orderDetails(id=${order.id})}" th:method="get">-->

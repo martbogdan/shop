@@ -9,6 +9,7 @@ import com.smallshop.shop.dao.repository.UserRepository;
 import com.smallshop.shop.exceptions.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -42,5 +43,21 @@ public class OrderService {
         newOrder.setOrderDeliveryCompany(odc);
         newOrder.setDeliveryAddress(address);
         return orderRepository.save(newOrder);
+    }
+    public Order updateOrder (Order order){
+        Order orderDB = orderRepository.findById(order.getId()).orElseThrow(NotFound::new);
+        if (!StringUtils.isEmpty(order.getDeliveryAddress())) {
+            orderDB.setDeliveryAddress(order.getDeliveryAddress());
+        }
+        if (!StringUtils.isEmpty(order.getOrderDeliveryCompany())){
+            orderDB.setOrderDeliveryCompany(order.getOrderDeliveryCompany());
+        }
+        if (!StringUtils.isEmpty(order.getOrderStatus())){
+            orderDB.setOrderStatus(order.getOrderStatus());
+        }
+        if (!StringUtils.isEmpty(order.getAdminComment())){
+            orderDB.setAdminComment(order.getAdminComment());
+        }
+        return orderRepository.save(orderDB);
     }
 }
