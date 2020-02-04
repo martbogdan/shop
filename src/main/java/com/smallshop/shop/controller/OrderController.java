@@ -127,7 +127,7 @@ public class OrderController {
         if (orderStatus.equals(OrderStatus.DONE)){
             List<OrderItems> orderItems = orderItemsService.getItemsByOrderId(id);
             for (OrderItems item : orderItems){
-                Product product = productService.getProductByName(item.getProduct().getName());
+                Product product = productService.getProductById(item.getProduct().getId());
                 product.setQuantity(product.getQuantity()-item.getQuantity());
                 productService.updateProduct(product);
             }
