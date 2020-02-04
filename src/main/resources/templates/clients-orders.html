@@ -41,8 +41,8 @@
             <td th:text="${allorder.user.firstName+' '+allorder.user.lastName}"></td>
             <td th:text="${allorder.orderDeliveryCompany.companyName+' - '+allorder.deliveryAddress}"></td>
             <td>
-                    <form >
-                        <input type="hidden" name="id" >
+                    <form action="/orderDetails" th:action="@{/orderDetails(id=${allorder.id})}" th:method="get">
+                        <input type="hidden" name="id" th:value="${allorder.id}">
                         <button class="button" type="submit">details</button>
                     </form>
                     <form >
