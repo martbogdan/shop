@@ -134,7 +134,7 @@ public class ProductController {
         Iterable<Product> products = productService.getAll();
         model.addAttribute("products", products);
         System.out.println("4 END");
-        return "redirect:/product/all";
+        return "redirect:/cart";
     }
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:color="http://www.w3.org/1999/xhtml">
 
 <head th:fragment="head">
     <meta charset="UTF-8">
@@ -31,7 +31,12 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:href="@{/cart}">Cart</a> </li>
+                <li>
+                    <a th:href="@{/cart}"><img width="20" src="/resources/images/flags/Fevicon.png" alt="Cart"/></a>
+                </li>
+                <li th:if="${#authorization.expression('isAuthenticated()')}">
+                    <span style="color: white"  th:text="${cartSize}"></span>
+                </li>
                 <li><a th:href="@{/user/orders}">Orders</a> </li>
                 <li>
                     <a th:if="${#locale.language=='en'}" href="?lang=uk"><img src="/resources/images/flags/gb.png" /></a>
