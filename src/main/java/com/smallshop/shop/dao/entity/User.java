@@ -18,10 +18,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     @NotBlank(message = "Must not be blank")
+    @Size(min = 1, max = 100)
     private String username;
     @NotBlank(message = "Must not be blank")
+    @Size(min = 1, max = 100)
     private String firstName;
     @NotBlank(message = "Must not be blank")
+    @Size(min = 1, max = 100)
     private String lastName;
     @NotBlank(message = "Must not be blank")
     @Email(message = "Must be a valid email address")
@@ -30,6 +33,7 @@ public class User {
     @Size(min = 10, max = 12)
     private String phoneNumber;
     @NotBlank(message = "Must not be blank")
+    @Size(min = 1, max = 100)
     private String password;
     private boolean active;
 
