@@ -1,6 +1,8 @@
 package com.smallshop.shop.controller;
 
 import com.smallshop.shop.dao.entity.User;
+import com.smallshop.shop.service.CategoryService;
+import com.smallshop.shop.service.ProductService;
 import com.smallshop.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainController {
     @Autowired
     UserService userService;
+    @Autowired
+    CategoryService categoryService;
+    @Autowired
+    ProductService productService;
 
 //    @ModelAttribute("user")
 //    public User activeUser (Authentication authentication){
@@ -24,6 +30,8 @@ public class MainController {
     public String getMainPage (@RequestParam(name = "email", required = false, defaultValue = "products")
                                String email, Model model){
         model.addAttribute("email", email);
+        model.addAttribute("categories", categoryService.getAllCatagories());
+        model.addAttribute("products", productService.getAll());
         return "index";
     }
 }
