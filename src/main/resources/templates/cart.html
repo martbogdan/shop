@@ -6,16 +6,17 @@
 </head>
 <body>
 <div th:replace="base-layout :: header"></div>
-CART
+
 <div class="container">
+    <H3 style="color: mediumblue" align="center"  th:text="#{main-page.cart}"></H3>
         <table class="table" align="center">
             <thead>
-            <th>Photo</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Sum</th>
-            <th>Action</th>
+            <th th:text="#{order-detail.photo}"></th>
+            <th th:text="#{order-detail.name}"></th>
+            <th th:text="#{order-detail.price}"></th>
+            <th th:text="#{order-detail.quantity}"></th>
+            <th th:text="#{order-detail.sum}"></th>
+            <th th:text="#{clients-order-table.action}"></th>
             </thead>
             <tbody th:each="cartRow : ${cartRows}">
             <tr >
@@ -31,17 +32,13 @@ CART
                         <input type="hidden" name="id" th:value="${cartRow.id}">
                         <input type="text" name="qty" id="sst" maxlength="12" th:value="${cartRow.quantity}" title="Quantity:"
                                class="input-text qty">
-<!--                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"-->
-<!--                                class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>-->
-<!--                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value&#45;&#45;;return false;"-->
-<!--                                class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>-->
-                        <button class="button" type="submit">Set Quantity</button>
+                        <button class="button" type="submit" th:text="#{action.set-quantity}"></button>
                         </form>
                     </div>
                 </td>
                 <td th:text="${cartRow.product.price*cartRow.quantity}"></td>
 
-                <td><div><a th:href="@{/cart/deleteProductFromCart(id=${cartRow.id})}">Delete</a></div></td>
+                <td><div><a th:href="@{/cart/deleteProductFromCart(id=${cartRow.id})}" th:text="#{action.delete}"></a></div></td>
             </tr>
             </tbody>
             <tr></tr>
@@ -61,7 +58,7 @@ CART
     <div th:if="${cartSize>0}">
         <form action="/order" th:action="@{/order}" th:method="post">
             <div class="form-group">
-                <label for="odc">Delivery</label>
+                <label for="odc" th:text="#{orderpage.delivcompany}"></label>
                 <select id="odc" name="odc"  >
                     <option disabled>Please select...</option>
                     <option th:each="delivCompany : ${delivCompanies}" th:value="${delivCompany.id}"
@@ -70,21 +67,18 @@ CART
 
             </div>
             <div class="form-group">
-                <textarea name="address" maxlength="1000">add address</textarea>
-<!--                <input type="text" name="address" maxlength="1000" th:rows="3">-->
+                <textarea name="address" maxlength="1000" th:placeholder="#{placeholder.add-address}"></textarea>
             </div>
             <div class="form-group">
-                <h3>Comment to order</h3>
+                <h3 th:text="#{clients-order-table.comment}"></h3>
                 <textarea th:type="text" name="comment" maxlength="1000"></textarea>
-<!--                <input type="text" name="comment" maxlength="1000" th:rows="3">-->
             </div>
             <div class="form-group">
                 <input type="submit" name="register-submit"
                        id="register-submit"
                        class="form-control btn btn-info"
-                       value="Add order">
+                       th:value="#{action.order}">
             </div>
-<!--            <button class="button" type="submit">Order</button>-->
         </form>
     </div>
 </div>
