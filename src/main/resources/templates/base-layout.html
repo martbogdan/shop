@@ -24,10 +24,10 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li th:classappend="${module == 'home' ? 'active' : ''}">
-                    <a href="#" th:href="@{/}">Home</a>
+                    <a href="#" th:href="@{/}" th:text="#{navbar.home}"></a>
                 </li>
                 <li th:classappend="${module == 'dashboard' ? 'active' : ''}">
-                    <a href="#" th:href="@{/category/list}">Categories</a>
+                    <a href="#" th:href="@{/category/list}" th:text="#{navbar.categories}"></a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -37,7 +37,7 @@
                 <li th:if="${#authorization.expression('isAuthenticated()')}">
                     <span style="color: white"  th:text="${cartSize}"></span>
                 </li>
-                <li><a th:href="@{/user/orders}">Orders</a> </li>
+                <li><a th:href="@{/user/orders}" th:text="#{navbar.orders}"></a> </li>
                 <li>
                     <a th:if="${#locale.language=='en'}" href="?lang=uk"><img src="/resources/images/flags/gb.png" /></a>
                     <a th:if="${#locale.language=='uk'}" href="?lang=en"><img src="/resources/images/flags/ua.png" /></a>
@@ -45,12 +45,12 @@
 
                 <li th:if="${#authorization.expression('!isAuthenticated()')}">
                     <a href="/login" th:href="@{/login}">
-                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
+                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;<span th:text="#{navbar.signin}"></span>
                     </a>
                 </li>
                 <li th:if="${#authorization.expression('!isAuthenticated()')}">
                     <a href="/registration" th:href="@{/registration}">
-                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign up
+                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;<span th:text="#{navbar.signup}"></span>
                     </a>
                 </li>
                 <li th:if="${#authorization.expression('isAuthenticated()')}">
