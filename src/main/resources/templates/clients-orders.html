@@ -9,7 +9,7 @@
 <div sec:authorize="hasAuthority('ADMIN')">
     <form action="/clients-orders" th:action="@{/clients-orders}" th:method="get">
         <div class="form-group">
-            <label for="orderStatus">Status</label>
+            <label for="orderStatus" th:text="#{clients-order-table.status}"></label>
             <select id="orderStatus" name="orderStatus"  >
                 <option disabled>Please select...</option>
                 <option th:each="orderstatus : ${orderStatuses}" th:value="${orderstatus}"
@@ -20,15 +20,15 @@
     </form>
     <table class="table" align="center">
         <thead>
-        <th>Date</th>
-        <th>Comment</th>
-        <th>Status</th>
-        <th>user Email</th>
-        <th>user PhoneNumber</th>
-        <th>user Name</th>
-        <th>Address</th>
-        <th>Actions</th>
-        <th>Admin coment</th>
+        <th th:text="#{clients-order-table.date}"></th>
+        <th th:text="#{clients-order-table.comment}"></th>
+        <th th:text="#{clients-order-table.status}"></th>
+        <th th:text="#{clients-order-table.email}"></th>
+        <th th:text="#{clients-order-table.phone}"></th>
+        <th th:text="#{clients-order-table.user-name}"></th>
+        <th th:text="#{clients-order-table.address}"></th>
+        <th th:text="#{clients-order-table.action}"></th>
+        <th th:text="#{clients-order-table.adm-comment}"></th>
         </thead>
         <tbody th:each="allorder : ${allOrders}">
         <tr>
