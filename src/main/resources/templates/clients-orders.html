@@ -45,7 +45,7 @@
                         <input type="hidden" name="id" th:value="${allorder.id}">
                         <button class="button" type="submit">details</button>
                     </form>
-                    <form action="/print-order" th:action="@{/print-order}" th:method="get">
+                    <form action="/print-order" th:action="@{/print-order/{orderId}(orderId=${allorder.id})}" th:method="get">
                         <input type="hidden" name="id" th:value="${allorder.id}">
                         <button class="button" type="submit">print</button>
                     </form>
