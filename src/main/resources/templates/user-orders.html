@@ -23,7 +23,7 @@
                 <td th:text="${order.orderStatus}"></td>
                 <td>
                     <div>
-                        <form action="/orderDetails" th:action="@{/orderDetails(id=${order.id})}" th:method="get">
+                        <form action="/orderDetails/{orderId}" th:action="@{/orderDetails/{orderId}(orderId=${order.id})}" th:method="get">
                             <input type="hidden" name="id" th:value="${order.id}">
                             <button class="button" type="submit">details</button>
                         </form>
