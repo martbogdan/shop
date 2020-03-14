@@ -41,11 +41,11 @@
             <td th:text="${allorder.user.firstName+' '+allorder.user.lastName}"></td>
             <td th:text="${allorder.orderDeliveryCompany.companyName+' - '+allorder.deliveryAddress}"></td>
             <td>
-                    <form action="/orderDetails" th:action="@{/orderDetails(id=${allorder.id})}" th:method="get">
+                    <form action="/orderDetails/{orderId}" th:action="@{/orderDetails/{orderId}(orderId=${allorder.id})}" th:method="get">
                         <input type="hidden" name="id" th:value="${allorder.id}">
                         <button class="button" type="submit">details</button>
                     </form>
-                    <form action="/print-order" th:action="@{/print-order/{orderId}(orderId=${allorder.id})}" th:method="get">
+                    <form action="/print-order/{orderId}" th:action="@{/print-order/{orderId}(orderId=${allorder.id})}" th:method="get">
                         <input type="hidden" name="id" th:value="${allorder.id}">
                         <button class="button" type="submit">print</button>
                     </form>

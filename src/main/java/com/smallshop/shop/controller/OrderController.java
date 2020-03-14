@@ -63,8 +63,8 @@ public class OrderController {
         return "user-orders";
     }
 
-    @GetMapping("/orderDetails")
-    public String getOrderDetails(@RequestParam Long id, Model model) {
+    @GetMapping("/orderDetails/{orderId}")
+    public String getOrderDetails(@PathVariable("orderId") Long id, Model model) {
         Order order = orderService.getOrderById(id);
         List<OrderItems> orderItems = orderItemsService.getItemsByOrderId(order.getId());
 
