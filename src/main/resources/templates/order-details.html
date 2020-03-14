@@ -11,11 +11,11 @@
     <h3 th:text="${order.orderStatus}">Status</h3>
     <table class="table" align="center">
         <thead>
-        <th>Photo</th>
-        <th>Name</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Sum</th>
+        <th th:text="#{order-detail.photo}"></th>
+        <th th:text="#{order-detail.name}"></th>
+        <th th:text="#{order-detail.quantity}"></th>
+        <th th:text="#{order-detail.price}"></th>
+        <th th:text="#{order-detail.sum}"></th>
         </thead>
         <tbody th:each="orderItem : ${orderItems}">
         <tr>
@@ -33,7 +33,7 @@
             <td></td>
             <td></td>
             <td></td>
-            <td><h3>Total:</h3></td>
+            <td><h3 th:text="#{order-detail.total}"></h3></td>
             <td ><h3 th:text="${sumOfOrderProducts}"></h3></td>
         </tr>
     </table>

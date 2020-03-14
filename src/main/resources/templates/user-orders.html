@@ -7,13 +7,13 @@
 <body>
 <div th:replace="base-layout :: header"></div>
 <div class="container">
-    <h3>Orders</h3>
+    <h3 th:text="#{clients-order-table.my-orders}"></h3>
     <div>
         <table class="table" align="center">
             <thead>
-            <th>Date</th>
-            <th>Comment</th>
-            <th>Status</th>
+            <th th:text="#{clients-order-table.date}"></th>
+            <th th:text="#{clients-order-table.comment}"></th>
+            <th th:text="#{clients-order-table.status}"></th>
             </thead>
             <tbody th:each="order : ${orders}">
             <tr>

@@ -17,7 +17,7 @@
              <form th:action="@{/product/addProductToCart}" method="post">
                  <input type="hidden" name="_csrf" th:value="${#authentication.authorities}">
                  <input type="hidden" name="id" th:value="${product.id}">
-                 <button class="button" type="submit">add to cart</button>
+                 <button class="button" type="submit" th:text="#{product-page.add-to-cart}"></button>
              </form>
              <div sec:authorize="hasAuthority('ADMIN')">
                  <form action="/product/uploadProductPhoto" th:action="@{/product/uploadProductPhoto/__${product.id}__}" method="POST" enctype="multipart/form-data">
@@ -30,34 +30,24 @@
                  </form>
              </div>
          </div>
-        <!-- <div class="single-prd-item">
-            <img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-        </div>
-        <div class="single-prd-item">
-            <img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-        </div> -->
     </div>
     <div class="s_product_text">
         <h3 th:text="${product.name}"></h3>
         <h2><span  th:text="${product.price}"></span><span> UAH</span></h2>
-        <ul class="list">
-            <li><a class="active" href="products-category.html" th:href="@{/product/categories/{categoryId}(categoryId=${category.id})}"><span>Category</span> : <span th:text="${product.category.categoryName}"></span></a></li>
-            <li><a href="#"><span>Availibility</span> : In Stock</a></li>
-        </ul>
+        <div>
+            <div><a  href="products-category.html" th:href="@{/product/categories/{categoryId}(categoryId=${category.id})}">
+                    <span th:text="#{product-page.category}"></span>: <span th:text="${product.category.categoryName}"></span>
+                 </a>
+            </div>
+            <div>
+                <span th:text="#{product-page.availibility}"></span><span>: </span>
+                    <span th:if="*{product.quantity>20}"><span style="color: green" th:text="#{product-page.in-stock}"></span></span>
+                    <span th:if="*{product.quantity>0 && product.quantity<20}"><span style="color: chocolate" th:text="#{product-page.expire}"></span></span>
+                    <span th:if="*{product.quantity==0}"><span style="color: red" th:text="#{product-page.not-available}"></span></span>
+            </div>
+        </div>
+        <span style="font-weight: bolder" th:text="#{product-page.description}"></span><span>:</span>
         <p><span th:text="${product.description}"></span></p>
-<!--        <div class="product_count">-->
-<!--            <label for="qty">Quantity:</label>-->
-<!--            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"-->
-<!--                    class="increase items-count" type="button"><i class="ti-angle-left"></i></button>-->
-<!--            <input type="text" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:" class="input-text qty">-->
-<!--            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value&#45;&#45;;return false;"-->
-<!--                    class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>-->
-<!--            <a class="button primary-btn" href="#">Add to Cart</a>-->
-<!--        </div>-->
-<!--        <div class="card_area d-flex align-items-center">-->
-<!--            <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>-->
-<!--            <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>-->
-<!--        </div>-->
     </div>
 </div>
 
