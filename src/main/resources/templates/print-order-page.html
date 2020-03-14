@@ -9,7 +9,14 @@
 <div class="container">
     <div th:object="${order}">
         <h4>Order Id: <span th:text="${order.id}"></span></h4>
-        <span><h4 th:text="${order.orderDeliveryCompany.companyName}"> </h4><h5 th:text="${order.deliveryAddress}"></h5></span>
+        <div>
+        <span th:text="#{orderpage.delivcompany}">
+        </span> <span style="font-weight: bold; font-size: 18px" th:text="${order.orderDeliveryCompany.companyName}"> </span>
+        </div>
+        <div>
+        <span th:text="#{orderpage.delivaddress}">
+        </span> <span style="font-weight: bold; font-size: 18px" th:text="${order.deliveryAddress}"></span>
+        </div>
         <span th:text="${order.user.firstName+' '+order.user.lastName}"></span>
         <div><span>tel.</span><span th:text="${order.user.phoneNumber}"></span></div>
         <h3 th:text="${#dates.format(currentDate, 'dd MMMM yyyy HH:mm:ss')}"><span ></span></h3>
@@ -47,7 +54,8 @@
             </tr>
         </table>
         <div>
-            <span th:text="${order.adminComment}"></span>
+            <span>Admin comment:</span>
+            <span style="font-style: italic; font-weight: bolder" th:text="${order.adminComment}"></span>
         </div>
     </div>
 </div>

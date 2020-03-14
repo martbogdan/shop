@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -135,8 +136,8 @@ public class OrderController {
         orderService.updateOrder(orderToUpdate);
         return "redirect:/clients-orders";
     }
-    @GetMapping("/print-order")
-    public String getPrintOrderPage (@RequestParam Long id, Model model) {
+    @GetMapping("/print-order/{orderId}")
+    public String getPrintOrderPage (@PathVariable("orderId") Long id, Model model) {
         List<OrderItems> orderItems = orderItemsService.getItemsByOrderId(id);
         model.addAttribute("currentDate", new Date());
         model.addAttribute("order", orderService.getOrderById(id));
