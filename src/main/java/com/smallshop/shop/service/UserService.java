@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -34,6 +35,7 @@ public class UserService {
         user.setActive(true);
         user.setRole(Collections.singleton(UserRole.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setDateRegistration(new Date());
         return userRepository.save(user);
     }
 

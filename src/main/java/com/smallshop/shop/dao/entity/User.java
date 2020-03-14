@@ -36,6 +36,7 @@ public class User {
     @Size(min = 1, max = 100)
     private String password;
     private boolean active;
+    private Date dateRegistration;
 
     private String photo;
     private Date dob;
