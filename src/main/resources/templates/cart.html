@@ -45,8 +45,12 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td><h3>Total:</h3></td>
-                <td ><h3 th:text="${sumOfCartProducts}"></h3></td>
+                <td></td>
+                <td></td>
+                <td >
+                    <span style="font-size: 20px; font-weight: bold" th:text="#{order-detail.total}"></span>
+                    <span style="font-size: 20px; font-weight: bolder" th:text="${sumOfCartProducts}"></span>
+                </td>
             </tr>
         </table>
 

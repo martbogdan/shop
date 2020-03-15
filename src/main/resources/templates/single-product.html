@@ -26,7 +26,7 @@
                             onclick="document.getElementById('selectedFile').click();"/>
                  </form>
                  <form action="/product/deleteProduct/" th:action="@{/product/deleteProduct/__${product.id}__}" method="get">
-                     <input type="submit" name="delete-prod" id="delete-product" value="Delete"/>
+                     <input type="submit" name="delete-prod" id="delete-product" th:value="#{action.delete}"/>
                  </form>
              </div>
          </div>
