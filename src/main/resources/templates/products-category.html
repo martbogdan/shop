@@ -15,10 +15,10 @@
                 <input type="hidden" name="_csrf" th:value="${#authentication.authorities}">
                 <input type="hidden" name="id" th:value="${product.id}">
                 <div class="card-product__img">
-                    <div class="card-img" th:if="*{product.photo==null}"><img width="200"
+                    <div class="card-img" th:if="*{product.photo==null}"><img width="200" height="220"
                                                                               src="/resources/images/Product_icon.png"
                                                                               alt="img"></div>
-                    <div th:unless="*{product.photo==null}"><img width="200"
+                    <div th:unless="*{product.photo==null}"><img width="200" height="220"
                                                                  th:src="'/resources/uploads/products/' + *{product.photo}">
                     </div>
                 </div>
@@ -27,8 +27,8 @@
                     <h4 class="card-product__title"><a href="single-product.html"
                                                        th:href="@{/product/single/{productId}(productId=${product.id})}"><span
                             th:text="${product.name}"></span></a></h4>
-                    <button class="btn" type="submit">Add to cart</button>
-                    <p><span th:text="${product.description}"></span></p>
+                    <button class="btn" type="submit" th:text="#{product-page.add-to-cart}"></button>
+<!--                    <p><span th:text="${product.description}"></span></p>-->
                 </div>
             </form>
         </div>
