@@ -28,7 +28,7 @@
                 <td th:text="${cartRow.product.price}"></td>
                 <td >
                     <div >
-                        <form action="/cart/updateCartRaw" th:action="@{/cart/updateCartRaw(id=${cartRow.id})}" th:method="get">
+                        <form action="/cart/updateCartRaw/{rawId}" th:action="@{/cart/updateCartRaw/{rawId} (rawId=${cartRow.id})}" th:method="get">
                         <input type="hidden" name="id" th:value="${cartRow.id}">
                         <input type="text" name="qty" id="sst" maxlength="12" th:value="${cartRow.quantity}" title="Quantity:"
                                class="input-text qty">

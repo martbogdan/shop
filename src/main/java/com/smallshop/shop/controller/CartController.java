@@ -15,10 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -93,12 +90,12 @@ public class CartController {
         return "forward:/cart";
     }
 
-    @GetMapping("/updateCartRaw")
-    public String updateCartQuantity(@RequestParam Long id, @RequestParam Integer qty) {
+    @GetMapping("/updateCartRaw/{rawId}")
+    public String updateCartQuantity(@PathVariable("rawId") Long id, @RequestParam Integer qty) {
         Cart updateCart = cartService.getCartRawById(id);
         cartService.updateQuantity(updateCart, qty);
         log.info("updated");
-        return "forward:/cart";
+        return "redirect:/cart";
     }
 
 
