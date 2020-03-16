@@ -55,6 +55,7 @@ public class ProductController {
         Product product = productService.getProductById(productId);
         model.addAttribute("product", product);
         model.addAttribute("category", product.getCategory());
+        model.addAttribute("categories", categoryService.getAllCatagories());
         return "single-product";
     }
 
@@ -99,6 +100,22 @@ public class ProductController {
             log.error("Error saving file", e);
         }
        return "redirect:/product/all";
+    }
+    @PostMapping("updateProduct/{id}")
+    public String updateProduct (@PathVariable("id") Long id,
+                                 @RequestParam String name,
+                                 @RequestParam Double price,
+                                 @RequestParam String description,
+                                 @RequestParam Category category,
+                                 @ModelAttribute("product") Product product,
+                                 Model model){
+
+        product.setName(product.getName());
+        product.setPrice(product.getPrice());
+        product.setDescription(product.getDescription());
+        product.setCategory(product.getCategory());
+        productService.updateProduct(product);
+        return "redirect:/product/single/"+product.getId();
     }
 
     @GetMapping("deleteProduct/{id}")

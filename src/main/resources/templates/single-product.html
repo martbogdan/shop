@@ -28,6 +28,43 @@
                  <form action="/product/deleteProduct/" th:action="@{/product/deleteProduct/__${product.id}__}" method="get">
                      <input type="submit" name="delete-prod" id="delete-product" th:value="#{action.delete}"/>
                  </form>
+                 <form action="/product/updateProduct" th:action="@{/product/updateProduct/__${product.id}__}" method="post">
+                     <div class="form-group">
+                         <label for="name" th:text="#{order-detail.name}"></label>:
+                         <input type="text" id="name" name="name"
+                                class="form-control" autofocus="autofocus" th:placeholder="${product.name}">
+                     </div>
+                     <div class="form-group">
+                         <label for="price" th:text="#{order-detail.price}"></label>:
+                         <input type="text" id="price" name="price"
+                                class="form-control" autofocus="autofocus" th:placeholder="${product.price}">
+                     </div>
+                     <div class="form-group">
+                         <label for="description" th:text="#{product-page.description}"></label>:
+                         <input type="text" id="description" name="description"
+                                class="form-control" autofocus="autofocus" th:placeholder="${product.description}">
+                     </div>
+                     <div class="form-group" >
+                         <label for="category" th:text="#{product-page.category}"></label>
+                         <select id="category" name="category" >
+                             <option disabled selected>Please select...</option>
+<!--                             <option selected th:text="${product.category.categoryName}"></option>-->
+                             <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                         </select>
+                     </div>
+                     <div class="form-group">
+                         <div class="row">
+                             <div class="col-sm-6 col-sm-offset-3">
+                                 <input type="submit"
+                                        name="register-submit"
+                                        id="register-submit"
+                                        class="form-control btn btn-info"
+                                        th:value="#{action.update}">
+                             </div>
+                         </div>
+                     </div>
+
+                 </form>
              </div>
          </div>
     </div>
