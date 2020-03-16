@@ -1,5 +1,6 @@
 package com.smallshop.shop.service;
 
+import com.smallshop.shop.controller.CartController;
 import com.smallshop.shop.dao.entity.Category;
 import com.smallshop.shop.dao.entity.Product;
 import com.smallshop.shop.dao.repository.ProductRepository;
@@ -32,6 +33,10 @@ public class ProductService {
         return productRepository.save(product);
     }
     public Product createProduct (String prodName, Double price, String description, Integer quantity, Category category) {
+        String priceValue = String.valueOf(price);
+       if (priceValue.substring(priceValue.indexOf(".")).length()>4){
+           price = UtilService.round(price,3);
+       }
         Product product = new Product();
         product.setName(prodName);
         product.setPrice(price);
@@ -52,7 +57,7 @@ public class ProductService {
             productDB.setDescription(product.getDescription());
         }
         if (!StringUtils.isEmpty(product.getPrice())) {
-            productDB.setPrice(product.getPrice());
+            productDB.setPrice(UtilService.round(product.getPrice(),3));
         }
         if (!StringUtils.isEmpty(product.getQuantity())) {
             productDB.setQuantity(product.getQuantity());

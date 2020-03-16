@@ -4,10 +4,7 @@ import com.smallshop.shop.dao.entity.Cart;
 import com.smallshop.shop.dao.entity.Product;
 import com.smallshop.shop.dao.entity.User;
 import com.smallshop.shop.exceptions.NotFound;
-import com.smallshop.shop.service.CartService;
-import com.smallshop.shop.service.DeliveryCompanyService;
-import com.smallshop.shop.service.ProductService;
-import com.smallshop.shop.service.UserService;
+import com.smallshop.shop.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -55,22 +52,20 @@ public class CartController {
         for (Cart cart : cartRows) {
            sum = sum + (cart.getProduct().getPrice()*cart.getQuantity());
         }
-        double roundedSum = round(sum,2);
+        double roundedSum = UtilService.round(sum,2);
+        String roundedSumStr = String.valueOf(roundedSum);
+        if (roundedSumStr.substring(roundedSumStr.indexOf(".")).length()<3){
+            roundedSumStr = roundedSumStr+"0";
+        }
         model.addAttribute("cartProducts", products);
         model.addAttribute("cartRows", cartRows);
-        model.addAttribute("sumOfCartProducts", roundedSum);
+        model.addAttribute("sumOfCartProducts", roundedSumStr);
         model.addAttribute("cartSize", products.size());
         model.addAttribute("delivCompanies", deliveryCompanyService.getAllCompanies());
         log.info("work");
         return "cart";
     }
-    private static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
 
-        BigDecimal bd = new BigDecimal(Double.toString(value));
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
-    }
     //     @PostMapping(params = "deleteProduct")
 //     public String deleteProduct (/*@AuthenticationPrincipal User user,*/ @RequestParam Long id, Model model){
 //         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
