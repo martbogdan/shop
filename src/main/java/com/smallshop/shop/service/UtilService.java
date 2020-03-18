@@ -11,4 +11,12 @@ public class UtilService {
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
+
+    public static String roundToString (double value, int places) {
+        String result = String.valueOf(value);
+        while (result.substring(result.indexOf(".")).length()<(places+1)){
+            result = result + "0";
+        }
+        return result;
+    }
 }

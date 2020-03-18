@@ -44,7 +44,7 @@ public class OrderController {
 
         Order order = orderService.saveOrder(user, new Date(), comment, odc, address);
         orderItemsService.saveOrderItems(user, order);
-        return "index";
+        return "redirect:/user/orders";
     }
 
     @GetMapping("/user/orders")

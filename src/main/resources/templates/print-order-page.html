@@ -40,7 +40,7 @@
                 <td th:text="${item.product.name}"></td>
                 <td th:text="${item.quantity}"></td>
                 <td th:text="${item.orderPrice}"></td>
-                <td th:text="${item.quantity*item.orderPrice}"></td>
+                <td th:text="${@thymeMath.multiplyAndRoundStr(item.orderPrice, item.quantity, 3)}"></td>
             </tr>
             </tbody>
             <tr></tr>

@@ -53,10 +53,8 @@ public class CartController {
            sum = sum + (cart.getProduct().getPrice()*cart.getQuantity());
         }
         double roundedSum = UtilService.round(sum,2);
-        String roundedSumStr = String.valueOf(roundedSum);
-        if (roundedSumStr.substring(roundedSumStr.indexOf(".")).length()<3){
-            roundedSumStr = roundedSumStr+"0";
-        }
+        String roundedSumStr = UtilService.roundToString(roundedSum,2);
+
         model.addAttribute("cartProducts", products);
         model.addAttribute("cartRows", cartRows);
         model.addAttribute("sumOfCartProducts", roundedSumStr);

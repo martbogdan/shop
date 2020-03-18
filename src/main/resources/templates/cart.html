@@ -36,7 +36,7 @@
                         </form>
                     </div>
                 </td>
-                <td th:text="${cartRow.product.price*cartRow.quantity}"></td>
+                <td th:text="${@thymeMath.multiplyAndRoundStr(cartRow.product.price, cartRow.quantity, 3)}"></td>
 
                 <td><div><a th:href="@{/cart/deleteProductFromCart(id=${cartRow.id})}" th:text="#{action.delete}"></a></div></td>
             </tr>
