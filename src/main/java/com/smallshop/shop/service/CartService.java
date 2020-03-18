@@ -52,9 +52,20 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public Cart updateQuantity(Cart cart, Integer qty) {
+    public Cart updateQuantity(Cart cart, String qty) {
         Cart cartDB = cartRepository.findById(cart.getId()).orElseThrow(NotFound::new);
-        cartDB.setQuantity(qty);
+        try {
+            int q = Integer.parseInt(qty);
+            cartDB.setQuantity(Math.abs(q));
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            int q = (int) Double.parseDouble(qty);
+            cartDB.setQuantity(Math.abs(q));
+        } catch (Exception e) {
+            e.printStackTrace();
+            cartDB.setQuantity(cartDB.getQuantity());
+        }
+
         return cartRepository.save(cartDB);
     }
 }

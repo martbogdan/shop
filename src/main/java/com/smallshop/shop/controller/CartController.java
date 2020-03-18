@@ -86,7 +86,7 @@ public class CartController {
     }
 
     @GetMapping("/updateCartRaw/{rawId}")
-    public String updateCartQuantity(@PathVariable("rawId") Long id, @RequestParam Integer qty) {
+    public String updateCartQuantity(@PathVariable("rawId") Long id, @RequestParam String qty) {
         Cart updateCart = cartService.getCartRawById(id);
         cartService.updateQuantity(updateCart, qty);
         log.info("updated");
