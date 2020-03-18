@@ -5,13 +5,14 @@ import com.smallshop.shop.dao.entity.Product;
 import com.smallshop.shop.dao.entity.User;
 import com.smallshop.shop.dao.repository.CartRepository;
 import com.smallshop.shop.exceptions.NotFound;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Service
 public class CartService {
     private CartRepository cartRepository;
@@ -54,16 +55,17 @@ public class CartService {
 
     public Cart updateQuantity(Cart cart, String qty) {
         Cart cartDB = cartRepository.findById(cart.getId()).orElseThrow(NotFound::new);
-        try {
-            int q = Integer.parseInt(qty);
-            cartDB.setQuantity(Math.abs(q));
-        }catch (NumberFormatException e){
-            e.printStackTrace();
-            int q = (int) Double.parseDouble(qty);
-            cartDB.setQuantity(Math.abs(q));
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (qty==null || qty.equals("")){
             cartDB.setQuantity(cartDB.getQuantity());
+        } else  {
+            try {
+                int q = (int) Double.parseDouble(qty);
+                cartDB.setQuantity(Math.abs(q));
+            }catch (NumberFormatException e){
+                log.error(e.getMessage());
+//                e.printStackTrace();
+                cartDB.setQuantity(cartDB.getQuantity());
+            }
         }
 
         return cartRepository.save(cartDB);
