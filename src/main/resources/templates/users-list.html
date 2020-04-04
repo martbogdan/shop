@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head th:replace="base-layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="base-layout :: header"></div>
+<div class="container" sec:authorize="hasAuthority('ADMIN')">
+    <h3>Users</h3>
+    <div>
+        <table class="table" align="center">
+            <thead>
+                <th>User nickname</th>
+                <th>User full name</th>
+                <th>email</th>
+                <th>phone</th>
+                <th>registration date</th>
+                <th>role</th>
+                <th>action</th>
+            </thead>
+            <tbody th:each="user : ${users}">
+                <tr>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.firstName + ' ' + user.lastName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.phoneNumber}"></td>
+                    <td th:text="*{#dates.format(user.dateRegistration, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${user.role}"></td>
+                    <td ></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -38,6 +38,12 @@ public class UserController {
         return userService.getUserByUsername(authentication.getName()).get();
     }
 
+    @GetMapping("users")
+    public String listOfUsers (Model model) {
+        model.addAttribute("users", userService.getAllUsers());
+        return "users-list";
+    }
+
     @GetMapping("profile")
     public String userProfile(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

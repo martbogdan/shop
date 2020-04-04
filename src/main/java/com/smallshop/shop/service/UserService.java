@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +30,10 @@ public class UserService {
     }
     public User getUserByName (String firstName) {
         return userRepository.findUserByFirstName(firstName);
+    }
+
+    public List<User> getAllUsers () {
+        return userRepository.findAll();
     }
 
     public User createUser (User user){

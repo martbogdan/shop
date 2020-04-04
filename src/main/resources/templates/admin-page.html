@@ -39,9 +39,12 @@
     <div class="container" align="center">
         <h3><a th:href="@{/clients-orders}"> CLIENTS ORDERS</a> </h3>
     </div>
-<div class="container" align="center">
+    <div class="container" align="center">
     <h3><a th:href="@{/category/listAdmin}">Manage category</a> </h3>
-</div>
+    </div>
+    <div class="container" align="center">
+        <h3><a th:href="@{/user/users}">List of users</a> </h3>
+    </div>
     <div class="container">
         <form action="/product/addProduct" th:action="@{/product/addProduct}" th:object="${newProduct}" method="post" >
             <div style="margin-top:10px;color:darkred;" th:text="${product_error}"></div>
