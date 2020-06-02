@@ -26,7 +26,14 @@
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.phoneNumber}"></td>
                     <td th:text="*{#dates.format(user.dateRegistration, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                    <td th:text="${user.role}"></td>
+                    <td >
+
+
+                        <form  action="/user/updateUserRole" th:action="@{/user/updateUserRole(id=${user.userId})}" method="post">
+                            <input type="hidden" name="id" th:value="${user.userId}">
+                            <button class="button" type="submit" th:text="${user.role}"></button>
+                        </form>
+                    </td>
                     <td ></td>
                 </tr>
             </tbody>

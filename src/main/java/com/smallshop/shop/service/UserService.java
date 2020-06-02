@@ -3,12 +3,14 @@ package com.smallshop.shop.service;
 import com.smallshop.shop.dao.entity.User;
 import com.smallshop.shop.dao.entity.UserRole;
 import com.smallshop.shop.dao.repository.UserRepository;
+import com.smallshop.shop.exceptions.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.sql.PreparedStatement;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +34,10 @@ public class UserService {
         return userRepository.findUserByFirstName(firstName);
     }
 
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(NotFound::new);
+    }
+
     public List<User> getAllUsers () {
         return userRepository.findAll();
     }
@@ -52,7 +58,7 @@ public class UserService {
     }
 
     public User updateUser (User user) {
-        User userDB = userRepository.findById(user.getUserId()).get();
+        User userDB = userRepository.findById(user.getUserId()).orElseThrow(NotFound::new);
         if (!StringUtils.isEmpty(user.getFirstName())) {
             userDB.setFirstName(user.getFirstName());
         }
@@ -81,4 +87,26 @@ public class UserService {
         return userDB;
     }
 
+    public User updateUserRole (Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(NotFound::new);
+        User user1 = new User();
+        user1.setUserId(user.getUserId());
+        user1.setUsername(user.getUsername());
+        user1.setFirstName(user.getFirstName());
+        user1.setLastName(user.getLastName());
+        user1.setEmail(user.getEmail());
+        user1.setPhoneNumber(user.getPhoneNumber());
+        user1.setPassword(user.getPassword());
+        user1.setActive(true);
+        user1.setDateRegistration(user.getDateRegistration());
+        user1.setPhoto(user.getPhoto());
+        user1.setDob(user.getDob());
+        user1.setOrders(user.getOrders());
+        if (user.getRole().equals(Collections.singleton(UserRole.USER))) {
+            user1.setRole(Collections.singleton(UserRole.ADMIN));
+        } else if (user.getRole().equals(Collections.singleton(UserRole.ADMIN))) {
+            user1.setRole(Collections.singleton(UserRole.USER));
+        }
+        return userRepository.save(user1);
+    }
 }

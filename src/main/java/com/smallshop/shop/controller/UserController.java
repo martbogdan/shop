@@ -69,4 +69,9 @@ public class UserController {
         }
         return "redirect:/user/profile";
     }
+    @PostMapping("updateUserRole")
+    public String updateUserRole (@RequestParam Long id) {
+        userService.updateUserRole(id);
+        return "redirect:/user/users";
+    }
 }
