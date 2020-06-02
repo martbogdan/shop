@@ -7,8 +7,12 @@
 <body>
 <div th:replace="base-layout :: header"></div>
 <div class="container" style="align-content: center">
+    <div>
+        <a style="font-weight: bolder; font-size: 20px" th:href="@{/product/all}" th:text="#{main-page.all-products}"></a>
+    </div>
     <div th:each="category : ${categories}">
-        <a href="products-category.html" th:href="@{/product/categories/{categoryId}(categoryId=${category.id})}"> <span th:text="${category.categoryName}"></span> </a> : <span th:text="${category.categoryDescription}"></span>
+        <a style="font-weight: bolder; font-size: 20px" href="products-category.html" th:href="@{/product/categories/{categoryId}(categoryId=${category.id})}"
+           th:text="${category.categoryName+': '+category.categoryDescription}" ></a>
     </div>
 </div>
 </body>
