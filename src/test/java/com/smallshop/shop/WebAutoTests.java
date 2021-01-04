@@ -28,7 +28,6 @@ public class WebAutoTests extends WebDriverSettings{
     public void registrationTest() {
         driver.get(WEB_HOST);
         driver.findElement(By.cssSelector("[href=\"/registration\"]")).click();
-        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("[class=\"row\"]")));
 
         int n = new Random().nextInt(100) + 1;
@@ -48,7 +47,7 @@ public class WebAutoTests extends WebDriverSettings{
     public void registrationFailureTest() {
         driver.get(WEB_HOST);
         driver.findElement(By.cssSelector("[href=\"/registration\"]")).click();
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("[class=\"row\"]")));
 
         driver.findElement(By.cssSelector("[class=\"btn btn-primary btn-block\"]")).click();
@@ -66,24 +65,24 @@ public class WebAutoTests extends WebDriverSettings{
         Assert.assertTrue(actualFirstName.contains(String.format(ERROR_MESSAGE_2, 1, 100))
                 && actualFirstName.contains(ERROR_MESSAGE_1));
 
-        WebElement lastName = driver.findElementById("lastName");
+        WebElement lastName = driver.findElement(By.id("lastName"));
         WebElement lastNameParent = lastName.findElement(By.xpath(".."));
         String actualLastName = lastNameParent.findElement(By.cssSelector("label")).getText();
         Assert.assertTrue(actualLastName.contains(String.format(ERROR_MESSAGE_2, 1, 100))
                 && actualLastName.contains(ERROR_MESSAGE_1));
 
-        WebElement email = driver.findElementById("email");
+        WebElement email = driver.findElement(By.id("email"));
         WebElement emailParent = email.findElement(By.xpath(".."));
         String actualEmailMessage = emailParent.findElement(By.cssSelector("label")).getText();
         Assert.assertEquals(ERROR_MESSAGE_1, actualEmailMessage);
 
-        WebElement phone = driver.findElementById("phoneNumber");
+        WebElement phone = driver.findElement(By.id("phoneNumber"));
         WebElement phoneParent = phone.findElement(By.xpath(".."));
         String actualPhoneMessage = phoneParent.findElement(By.cssSelector("label")).getText();
         Assert.assertTrue(actualPhoneMessage.contains(String.format(ERROR_MESSAGE_2, 10, 12))
                 && actualPhoneMessage.contains(ERROR_MESSAGE_1));
 
-        WebElement password = driver.findElementById("password");
+        WebElement password = driver.findElement(By.id("password"));
         WebElement passwordParent = password.findElement(By.xpath(".."));
         String actualPasswordMessage = passwordParent.findElement(By.cssSelector("label")).getText();
         Assert.assertTrue(actualPasswordMessage.contains(String.format(ERROR_MESSAGE_2, 1, 100))
